@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.pichs.common.widget.cardview.XCardLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/x_popup_menu_item_root"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <com.pichs.common.widget.view.XImageView
+        android:id="@+id/x_popup_menu_item_image"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="16dp"
+        android:padding="6dp" />
+
+    <com.pichs.common.widget.view.XTextView
+        android:id="@+id/x_popup_menu_item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        android:textColor="#333333"
+        android:textSize="14sp" />
+
+</com.pichs.common.widget.cardview.XCardLinearLayout>

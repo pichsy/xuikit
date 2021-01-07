@@ -25,7 +25,7 @@ public class UpdateDialog extends Dialog {
     private XCardLinearLayout mRootView;
 
     public UpdateDialog(@NonNull Context context) {
-        this(context, R.style.NiceDialogStyle);
+        this(context, R.style.XBaseDialogStyle);
     }
 
     public UpdateDialog(@NonNull Context context, int themeResId) {

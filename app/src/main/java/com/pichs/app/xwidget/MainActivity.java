@@ -12,6 +12,11 @@ import android.widget.TextView;
 import com.pichs.common.widget.cardview.XCardButton;
 import com.pichs.common.widget.utils.XTypefaceHelper;
 import com.pichs.common.widget.view.XButton;
+import com.pichs.xuikit.toolbar.XToolBarLayout;
+import com.pichs.xuikit.toolbar.XToolBarMenuItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
 //                XTypefaceHelper.setGlobalTypefaceStyle(getApplicationContext(), XTypefaceHelper.NONE);
             }
         });
+        XToolBarLayout toolBarLayout = findViewById(R.id.xtoolbars);
+
+        List<XToolBarMenuItem> list = new ArrayList<>();
+        list.add(new XToolBarMenuItem("你好"));
+        toolBarLayout.setMenuList(list);
 
     }
 }
