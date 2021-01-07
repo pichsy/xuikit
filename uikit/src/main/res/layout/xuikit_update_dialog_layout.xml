@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:skin="http://schemas.android.com/android/skin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.pichs.common.widget.cardview.XCardLinearLayout
+        android:layout_width="300dp"
+        android:id="@+id/update_root_ll"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="26dp"
+        android:layout_marginRight="26dp"
+        android:background="#ffffff"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:xp_radius="16dp"
+        skin:enable="true">
+
+        <com.pichs.common.widget.view.XTextView
+            android:id="@+id/update_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="标题"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            skin:enable="true" />
+
+
+        <com.pichs.common.widget.view.XTextView
+            android:id="@+id/update_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="发现新版本，确定要更新吗？"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            skin:enable="true" />
+
+        <com.pichs.common.widget.progressbar.XProgressBar
+            android:id="@+id/update_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginTop="16dp"
+            app:xp_backgroundColor="#e1e1e1"
+            app:xp_progressColor="#536DFE"
+            app:xp_progressType="roundRect" />
+
+        <LinearLayout
+            android:id="@+id/update_layout_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <com.pichs.common.widget.cardview.XCardButton
+                android:id="@+id/update_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:minHeight="1dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="取消"
+                android:textColor="#666666"
+                android:textSize="15sp"
+                skin:enable="true" />
+
+            <com.pichs.common.widget.cardview.XCardButton
+                android:id="@+id/update_sure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:minHeight="1dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="确定"
+                android:textColor="#536DFE"
+                android:textSize="15sp"
+                skin:enable="true" />
+
+        </LinearLayout>
+
+    </com.pichs.common.widget.cardview.XCardLinearLayout>
+
+
+</FrameLayout>

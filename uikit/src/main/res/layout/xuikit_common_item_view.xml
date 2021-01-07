@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.pichs.common.widget.cardview.XCardRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="48dp">
+
+    <com.pichs.common.widget.cardview.XCardImageView
+        android:id="@+id/common_item_iv"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="16dp"
+        android:src="#f00"
+        android:visibility="visible" />
+
+    <com.pichs.common.widget.view.XTextView
+        android:id="@+id/common_item_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/common_item_iv"
+        android:text="设置"
+        android:textColor="#333333"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="12dp"
+        android:gravity="center_vertical">
+
+        <com.pichs.switcher.Switcher
+            android:id="@+id/common_item_switcher"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:checked="false"
+            android:elevation="3dp"
+            android:visibility="gone"
+            app:xp_bgColor_switchOff="#d8d8d8"
+            app:xp_bgColor_switchOn="#00C853" />
+
+        <com.pichs.common.widget.view.XTextView
+            android:id="@+id/common_item_sub_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="版本"
+            android:textColor="#999999"
+            android:textSize="14sp" />
+
+        <com.pichs.common.widget.view.XImageView
+            android:id="@+id/common_item_iv_arrow"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/xuikit_common_item_view_arrow_right_gray" />
+    </LinearLayout>
+
+</com.pichs.common.widget.cardview.XCardRelativeLayout>
