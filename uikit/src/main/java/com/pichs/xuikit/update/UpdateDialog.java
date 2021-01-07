@@ -45,7 +45,6 @@ public class UpdateDialog extends Dialog {
         mLayoutBtn = findViewById(R.id.update_layout_btn);
     }
 
-
     public UpdateDialog setRadius(int radius) {
         mRootView.setRadius(radius);
         return this;
@@ -177,7 +176,6 @@ public class UpdateDialog extends Dialog {
         this.setCanceledOnTouchOutside(cancelable);
         return this;
     }
-
 
     public interface OnBtnClickCallback {
         void onClick(UpdateDialog dialog, View view);
