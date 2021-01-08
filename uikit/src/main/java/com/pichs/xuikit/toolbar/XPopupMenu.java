@@ -3,6 +3,7 @@ package com.pichs.xuikit.toolbar;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.pichs.common.utils.recyclerview.DividerItemDecoration;
-import com.pichs.common.widget.cardview.XCardLinearLayout;
+import com.pichs.common.widget.cardview.XCardConstraintLayout;
 import com.pichs.common.widget.utils.XDisplayHelper;
 import com.pichs.common.widget.view.XImageView;
 import com.pichs.common.widget.view.XTextView;
@@ -34,17 +34,21 @@ public class XPopupMenu {
     private PopListAdapter mAdapter;
     private Builder builder;
     private RecyclerView mListView;
+    private int mMenuWidth = 0;
+    private int mMenuHeight = 0;
 
     private XPopupMenu(Context context, @NotNull Builder builder) {
         this.mContext = context;
         this.builder = builder;
+        this.mMenuHeight = builder.menuHeight;
+        this.mMenuWidth = builder.menuWidth;
         init(context);
     }
 
     public static class Builder {
         private Context context;
         private int menuWidth = 0;
-        private int menuHeight = ViewGroup.LayoutParams.WRAP_CONTENT;
+        private int menuHeight = 0;
         private int menuArrowHeight;
         private int menuArrowWidth;
         private List<XPopupMenuItem> menuItemList;
@@ -53,7 +57,7 @@ public class XPopupMenu {
         @ColorInt
         private int itemTextColor = Color.LTGRAY;
         @ColorInt
-        private int dividerColor = Color.TRANSPARENT;
+        private int dividerColor = Color.parseColor("#555555");
         private int dividerHeight = 1;
         private int dividerMarginStart = 0;
         private int dividerMarginEnd = 0;
@@ -65,6 +69,8 @@ public class XPopupMenu {
         private int radius;
         // 弹窗的背景色
         private int popupMenuBgColor;
+        private boolean isDimAmountEnable = false;
+
 
         private int itemHeight;
         private int popupMenuAnimationStyle = R.style.XP_Animation_PopDownMenu_Right;
@@ -86,6 +92,11 @@ public class XPopupMenu {
             return this;
         }
 
+        public Builder setDimAmountEnable(boolean dimAmountEnable) {
+            isDimAmountEnable = dimAmountEnable;
+            return this;
+        }
+
         public Builder setMenuArrowHeight(int menuArrowHeight) {
             this.menuArrowHeight = menuArrowHeight;
             return this;
@@ -93,11 +104,6 @@ public class XPopupMenu {
 
         public Builder setMenuArrowWidth(int menuArrowWidth) {
             this.menuArrowWidth = menuArrowWidth;
-            return this;
-        }
-
-        public Builder setDividerMarginEnd(int dividerMarginEnd) {
-            this.dividerMarginEnd = dividerMarginEnd;
             return this;
         }
 
@@ -166,7 +172,7 @@ public class XPopupMenu {
             return this;
         }
 
-        public Builder setDivideMarginEnd(int margin) {
+        public Builder setDividerMarginEnd(int margin) {
             this.dividerMarginEnd = margin;
             return this;
         }
@@ -177,21 +183,19 @@ public class XPopupMenu {
         }
 
         public XPopupMenu create() {
+
             return new XPopupMenu(context, this);
         }
     }
 
     private void init(Context context) {
-        if (builder.menuWidth == 0) {
-            builder.menuWidth = XDisplayHelper.getScreenWidth(context) * 2 / 5;
-        }
-        mListView = new RecyclerView(context);
-        mListView.setLayoutManager(new LinearLayoutManager(mContext));
-        mListView.addItemDecoration(new DividerItemDecoration(mContext, RecyclerView.VERTICAL, builder.dividerHeight, builder.dividerColor));
         if (builder.menuItemList != null) {
             mMenuItemList.clear();
             mMenuItemList.addAll(builder.menuItemList);
         }
+        mListView = new RecyclerView(context);
+        mListView.setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
+        mListView.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter = new PopListAdapter(context, mMenuItemList, builder.itemLayoutPressedColor,
                 builder.iconColorFilter, builder.itemTextColor, builder.itemHeight,
                 builder.dividerColor, builder.dividerHeight,
@@ -228,20 +232,40 @@ public class XPopupMenu {
 
     // 显示
     public void show(View anchor) {
-        popActions = new PopActions(mContext,
-                builder.menuWidth, builder.menuHeight,
-                builder.menuArrowWidth, builder.menuArrowHeight);
+        if (mMenuWidth == 0) {
+            mMenuWidth = XDisplayHelper.getScreenWidth(mContext) * 2 / 5;
+        }
+        Log.d("XPopupMenu==>", "mMenuHeight:" + mMenuHeight);
+        Log.d("XPopupMenu==>", "builder.itemHeight:" + builder.itemHeight);
+        Log.d("XPopupMenu==>", "mMenuItemList-size:" + mMenuItemList.size());
 
-        popActions.setDimAmountEnable(true)
-                .setBackgroundColor(builder.popupMenuBgColor)
-                .setAnimationStyle(builder.popupMenuAnimationStyle)
+        if (mMenuHeight <= 0) {
+            int size = mMenuItemList.size();
+            if (size <= 0) {
+                size = 1;
+            }
+            Log.d("XPopupMenu==>", "size:" + size);
+            if (builder.itemHeight <= 0) {
+                mMenuHeight = XDisplayHelper.dp2px(mContext, 48) * size;
+                Log.d("XPopupMenu==>", "48dp:" + XDisplayHelper.px2dp(mContext, 48));
+            } else {
+                mMenuHeight = builder.itemHeight * size;
+            }
+        }
+        Log.d("XPopupMenu==>", "mMenuHeight:" + mMenuHeight);
+        Log.d("XPopupMenu==>", "mMenuWidth:" + mMenuWidth);
+        popActions = new PopActions.Builder(mContext)
+                .setOffsetY(XDisplayHelper.dp2px(mContext, 7))
                 .setRadius(builder.radius)
-                .setOnPopupWindowDismissListener(new PopActions.OnPopupWindowDismissListener() {
-                    @Override
-                    public void popDismiss() {
-                        // nothing to do
-                    }
-                });
+                .setContentWidth(mMenuWidth)
+                .setContentHeight(mMenuHeight)
+                .setContentView(mListView)
+                .setArrowWidth(builder.menuArrowWidth)
+                .setArrowHeight(builder.menuArrowHeight)
+                .setAnimationStyle(builder.popupMenuAnimationStyle)
+                .setSideMargin(XDisplayHelper.dp2px(mContext, 6))
+                .setBackgroundColor(builder.popupMenuBgColor)
+                .build();
         popActions.show(anchor);
     }
 
@@ -312,6 +336,10 @@ public class XPopupMenu {
             // 设置数据
             XPopupMenuItem menuItem = list.get(position);
 
+            if (radius >= 0) {
+                holder.mRootView.setRadius(radius);
+            }
+
             holder.mIcon.setVisibility(View.VISIBLE);
             holder.mTitle.setVisibility(View.VISIBLE);
             if (menuItem.getShowType() == XToolBarShowType.TEXT_ONLY) {
@@ -378,6 +406,21 @@ public class XPopupMenu {
                     }
                 }
             });
+
+            if ((position == list.size() - 1) || dividerColor == 0 || dividerHeight <= 0) {
+                holder.mDivider.setVisibility(View.INVISIBLE);
+            } else {
+                holder.mDivider.setVisibility(View.VISIBLE);
+                holder.mDivider.setBackgroundColor(dividerColor);
+                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.mDivider.getLayoutParams();
+                if (layoutParams != null) {
+                    layoutParams.height = dividerHeight;
+                    layoutParams.setMarginStart(dividerMarginStart);
+                    layoutParams.setMarginEnd(dividerMarginEnd);
+                    holder.mDivider.setLayoutParams(layoutParams);
+                }
+            }
+
         }
 
         @Override
@@ -388,13 +431,15 @@ public class XPopupMenu {
         public static class PopMenuListViewHolder extends RecyclerView.ViewHolder {
             public XImageView mIcon;
             public XTextView mTitle;
-            public XCardLinearLayout mRootView;
+            public XCardConstraintLayout mRootView;
+            public View mDivider;
 
             public PopMenuListViewHolder(@NonNull View itemView) {
                 super(itemView);
                 mIcon = itemView.findViewById(R.id.x_popup_menu_item_image);
                 mTitle = itemView.findViewById(R.id.x_popup_menu_item_text);
                 mRootView = itemView.findViewById(R.id.x_popup_menu_item_root);
+                mDivider = itemView.findViewById(R.id.x_popup_menu_item_divider);
             }
         }
 

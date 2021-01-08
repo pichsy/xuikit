@@ -1,5 +1,6 @@
 package com.pichs.xuikit.toolbar;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -10,7 +11,6 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,14 +18,14 @@ import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IntRange;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 
-import com.pichs.common.utils.utils.OsUtils;
+import com.pichs.common.utils.utils.ToastUtils;
 import com.pichs.common.widget.cardview.XCardRelativeLayout;
 import com.pichs.common.widget.utils.XDisplayHelper;
 import com.pichs.common.widget.utils.XStatusBarHelper;
+import com.pichs.common.widget.view.XImageView;
+import com.pichs.common.widget.view.XTextView;
 import com.pichs.xuikit.R;
 
 import java.util.ArrayList;
@@ -82,6 +82,15 @@ public class XToolBarLayout extends XCardRelativeLayout {
     private int item_layoutPressedColor;
     private int menu_backgroundColor;
     private int item_dividerColor;
+    private int item_dividerHeight;
+    private int item_dividerMarginEnd;
+    private int item_dividerMarginStart;
+    // 菜单弹窗的圆角
+    private int mPopMenuBackgroundRadius;
+    private int mPopupMenuArrowWidth;
+    private int mPopupMenuArrowHeight;
+    private boolean isDimAmountEnable = false;
+    private int mPopupMenuItemHeight;
 
     public void setOnBackClickListener(OnXToolBarBackClickListener onBackClickListener) {
         this.mBackClickListener = onBackClickListener;
@@ -120,54 +129,97 @@ public class XToolBarLayout extends XCardRelativeLayout {
         TypedArray ta = context.getResources().obtainAttributes(attrs, R.styleable.XToolBarLayout);
 
         // 返回键
-        setBackIcon(ta.getDrawable(R.styleable.XToolBarLayout_xt_backIcon));
-        setBackIconBackground(ta.getDrawable(R.styleable.XToolBarLayout_xt_backIcon_background));
-        setBackIconColorFilter(ta.getColor(R.styleable.XToolBarLayout_xt_backIcon_colorFilter, 0));
-        setBackIconPadding(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xt_backIcon_padding, 0));
-        setBackIconMarginStart(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xt_backIcon_marginStart, 0));
-        setBackIconVisibility(ta.getInt(R.styleable.XToolBarLayout_xt_backIcon_visibility, 0));
+        setBackIcon(ta.getDrawable(R.styleable.XToolBarLayout_xp_toolbar_backIcon));
+        setBackIconBackground(ta.getDrawable(R.styleable.XToolBarLayout_xp_toolbar_backIcon_background));
+        setBackIconColorFilter(ta.getColor(R.styleable.XToolBarLayout_xp_toolbar_backIcon_colorFilter, 0));
+        setBackIconPadding(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_backIcon_padding, 0));
+        setBackIconMarginStart(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_backIcon_marginStart, 0));
+        setBackIconVisibility(ta.getInt(R.styleable.XToolBarLayout_xp_toolbar_backIcon_visibility, 0));
 
         // 关闭键
-        setCloseIcon(ta.getDrawable(R.styleable.XToolBarLayout_xt_closeIcon));
-        setCloseIconBackground(ta.getDrawable(R.styleable.XToolBarLayout_xt_closeIcon_background));
-        setCloseIconPadding(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xt_closeIcon_padding, 0));
-        setCloseIconColorFilter(ta.getColor(R.styleable.XToolBarLayout_xt_closeIcon_colorFilter, 0));
-        setCloseIconMarginStart(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xt_closeIcon_marginStart, 0));
-        setCloseIconVisibility(ta.getInt(R.styleable.XToolBarLayout_xt_closeIcon_visibility, 1));
+        setCloseIcon(ta.getDrawable(R.styleable.XToolBarLayout_xp_toolbar_closeIcon));
+        setCloseIconBackground(ta.getDrawable(R.styleable.XToolBarLayout_xp_toolbar_closeIcon_background));
+        setCloseIconPadding(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_closeIcon_padding, 0));
+        setCloseIconColorFilter(ta.getColor(R.styleable.XToolBarLayout_xp_toolbar_closeIcon_colorFilter, 0));
+        setCloseIconMarginStart(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_closeIcon_marginStart, 0));
+        setCloseIconVisibility(ta.getInt(R.styleable.XToolBarLayout_xp_toolbar_closeIcon_visibility, 1));
 
         // 是否适应StatusBar ， 配合XStatusBarHelper.translucent(); 实现沉浸式状态栏
-        setFitSystemStatusBar(ta.getBoolean(R.styleable.XToolBarLayout_xt_fitSystemStatusBar, false));
+        setFitSystemStatusBar(ta.getBoolean(R.styleable.XToolBarLayout_xp_toolbar_fitSystemStatusBar, false));
 
         // title
-        setTitle(ta.getText(R.styleable.XToolBarLayout_xt_title));
-        setTitleTextSize(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xt_title_textSize, 0));
-        setTitleTextColor(ta.getColor(R.styleable.XToolBarLayout_xt_title_textColor, 0));
-        setTitleTextStyle(ta.getInt(R.styleable.XToolBarLayout_xt_title_TextStyle, 0));
+        setTitle(ta.getText(R.styleable.XToolBarLayout_xp_toolbar_title));
+        setTitleTextSize(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_title_textSize, 0));
+        setTitleTextColor(ta.getColor(R.styleable.XToolBarLayout_xp_toolbar_title_textColor, 0));
+        setTitleTextStyle(ta.getInt(R.styleable.XToolBarLayout_xp_toolbar_title_TextStyle, 0));
         // 0 center， 1 left
-        setTitleGravity(ta.getInt(R.styleable.XToolBarLayout_xt_title_layoutGravity, 0));
-        setTitleMarginStart(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xt_title_marginStart, 0));
-        setTitleMarginEnd(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xt_title_marginEnd, 0));
+        setTitleGravity(ta.getInt(R.styleable.XToolBarLayout_xp_toolbar_title_layoutGravity, 0));
+        setTitleMarginStart(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_title_marginStart, 0));
+        setTitleMarginEnd(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_title_marginEnd, 0));
 
         // menu
-        setMaxInFrame(ta.getInteger(R.styleable.XToolBarLayout_xt_menu_maxInFrame, 3));
+        setMaxInFrame(ta.getInteger(R.styleable.XToolBarLayout_xp_toolbar_menu_maxInFrame, 3));
         // menu color
-        setOptionColor(ta.getColor(R.styleable.XToolBarLayout_xt_menu_optionIcon_colorFilter, 0));
+        setOptionColor(ta.getColor(R.styleable.XToolBarLayout_xp_toolbar_menu_optionIcon_colorFilter, 0));
         // menu marginEnd
-        setOptionMarginEnd(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xt_menu_optionIcon_marginEnd, 0));
-        setOptionPadding(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xt_menu_optionIcon_padding, 0));
-        setOptionDrawable(ta.getDrawable(R.styleable.XToolBarLayout_xt_menu_optionIcon));
-        setOptionBackground(ta.getDrawable(R.styleable.XToolBarLayout_xt_menu_optionIconBackground));
+        setOptionMarginEnd(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_menu_optionIcon_marginEnd, 0));
+        setOptionPadding(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_menu_optionIcon_padding, 0));
+        setOptionDrawable(ta.getDrawable(R.styleable.XToolBarLayout_xp_toolbar_menu_optionIcon));
+        setOptionBackground(ta.getDrawable(R.styleable.XToolBarLayout_xp_toolbar_menu_optionIconBackground));
 
         // toolbar上的 menu 水平间距
-        setHorizontalSpacing(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xt_menu_horizontal_spacing, 0));
-        setPopupMenuWidth(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xt_popup_menu_width, 0));
+        setHorizontalSpacing(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_menu_horizontalSpacing, 0));
+        setPopupMenuWidth(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_popupMenu_width, 0));
         // 0，light 1，dark
-        setPopupMenuBackgroundColor(ta.getColor(R.styleable.XToolBarLayout_xt_popup_menu_backgroundColor, Color.WHITE));
-        setPopupMenuItemTextColor(ta.getColor(R.styleable.XToolBarLayout_xt_popup_menu_item_textColor, 0));
-        setPopupMenuItemDividerColor(ta.getColor(R.styleable.XToolBarLayout_xt_popup_menu_item_dividerColor, 0));
-        setPopupMenuItemLayoutPressedColor(ta.getColor(R.styleable.XToolBarLayout_xt_popup_menu_item_layoutPressedColor, 0));
-        setPopupMenuItemIconColorFilter(ta.getColor(R.styleable.XToolBarLayout_xt_popup_menu_item_iconColorFilter, 0));
+        setPopupMenuBackgroundColor(ta.getColor(R.styleable.XToolBarLayout_xp_toolbar_popupMenu_backgroundColor, Color.WHITE));
+        setPopupMenuItemTextColor(ta.getColor(R.styleable.XToolBarLayout_xp_toolbar_popupMenuItem_textColor, 0));
+        setPopupMenuItemDividerColor(ta.getColor(R.styleable.XToolBarLayout_xp_toolbar_popupMenuItem_dividerColor, Color.LTGRAY));
+        setPopupMenuItemDividerHeight(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_popupMenuItem_dividerHeight, 1));
+        setPopupMenuItemDividerMarginEnd(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_popupMenuItem_dividerMarginEnd, XDisplayHelper.dp2px(context, 16)));
+        setPopupMenuItemDividerMarginStart(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_popupMenuItem_dividerMarginStart, XDisplayHelper.dp2px(context, 16)));
+        setPopupMenuItemLayoutPressedColor(ta.getColor(R.styleable.XToolBarLayout_xp_toolbar_popupMenuItem_layoutPressedColor, Color.parseColor("#555555")));
+        setPopupMenuItemIconColorFilter(ta.getColor(R.styleable.XToolBarLayout_xp_toolbar_popupMenuItem_iconColorFilter, 0));
+        setPopupMenuBackgroundRadius(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_popupMenu_backgroundRadius, XDisplayHelper.dp2px(context, 6)));
+        setPopupMenuArrowHeight(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_popupMenu_arrowHeight, XDisplayHelper.dp2px(context, 6)));
+        setPopupMenuArrowWidth(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_popupMenu_arrowWidth, XDisplayHelper.dp2px(context, 12)));
+        setPopupMenuItemHeight(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_popupMenu_itemHeight, 0));
         ta.recycle();
+    }
+
+    private XToolBarLayout setPopupMenuItemDividerMarginStart(int marginStart) {
+        this.item_dividerMarginStart = marginStart;
+        return this;
+    }
+
+
+    private XToolBarLayout setPopupMenuItemDividerMarginEnd(int marginEnd) {
+        this.item_dividerMarginEnd = marginEnd;
+        return this;
+    }
+
+    private XToolBarLayout setPopupMenuItemDividerHeight(int height) {
+        this.item_dividerHeight = height;
+        return this;
+    }
+
+    private XToolBarLayout setPopupMenuItemHeight(int itemHeight) {
+        this.mPopupMenuItemHeight = itemHeight;
+        return this;
+    }
+
+    private XToolBarLayout setPopupMenuArrowWidth(int arrowWidth) {
+        this.mPopupMenuArrowWidth = arrowWidth;
+        return this;
+    }
+
+    private XToolBarLayout setPopupMenuArrowHeight(int arrowHeight) {
+        this.mPopupMenuArrowHeight = arrowHeight;
+        return this;
+    }
+
+    private XToolBarLayout setPopupMenuBackgroundRadius(int radius) {
+        this.mPopMenuBackgroundRadius = radius;
+        return this;
     }
 
     public XToolBarLayout setPopupMenuItemIconColorFilter(int color) {
@@ -201,6 +253,9 @@ public class XToolBarLayout extends XCardRelativeLayout {
         if (isFitSystemStatusBar) {
             setPadding(getPaddingLeft(), statusBarHeight + getPaddingTop(), getPaddingRight(), getPaddingBottom());
             isStatusBarFitted = true;
+            if (mContext instanceof Activity) {
+                XStatusBarHelper.translucent((Activity) mContext);
+            }
         } else {
             if (isStatusBarFitted) {
                 setPadding(getPaddingLeft(), getPaddingTop() - statusBarHeight, getPaddingRight(), getPaddingBottom());
@@ -262,7 +317,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
      */
     public void setBackIconVisibility(int visibility) {
         mIvBack.setVisibility((visibility == 0) ? VISIBLE : GONE);
-        resetTitleMargin();
+
     }
 
     /**
@@ -286,7 +341,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
         }
         layoutParams.leftMargin = backIconMarginStart;
         mIvBack.setLayoutParams(layoutParams);
-        resetTitleMargin();
+
     }
 
     /**
@@ -351,7 +406,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
      */
     public void setCloseIconVisibility(int visibility) {
         mIvClose.setVisibility((visibility == 0) ? VISIBLE : GONE);
-        resetTitleMargin();
+
     }
 
     /**
@@ -375,7 +430,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
         }
         layoutParams.leftMargin = closeIconMarginStart;
         mIvClose.setLayoutParams(layoutParams);
-        resetTitleMargin();
+
     }
 
     /**
@@ -465,33 +520,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
         } else {
             // 这里需要计算一下margin最左边距
             mTvTitle.setGravity(Gravity.CENTER);
-            resetTitleMargin();
         }
-    }
-
-    private void resetTitleMargin() {
-//        int shouldLeftMargin = XDisplayHelper.dp2px(mContext, 16);
-//        if (mIvBack.getVisibility() != GONE) {
-//            ViewGroup.MarginLayoutParams backLp = (MarginLayoutParams) mIvBack.getLayoutParams();
-//            shouldLeftMargin += mIvBack.getWidth() + backLp.leftMargin + backLp.rightMargin;
-//        }
-//        if (mIvClose.getVisibility() != GONE) {
-//            ViewGroup.MarginLayoutParams closeLp = (MarginLayoutParams) mIvClose.getLayoutParams();
-//            shouldLeftMargin += mIvClose.getWidth() + closeLp.leftMargin + closeLp.rightMargin;
-//        }
-//        int shouldRightMargin = XDisplayHelper.dp2px(mContext, 16);
-//        if (mMenuLayout.getVisibility() != GONE) {
-//            shouldRightMargin += mMenuLayout.getMeasuredWidth();
-//            ViewGroup.MarginLayoutParams menuLp = (MarginLayoutParams) mMenuLayout.getLayoutParams();
-//            shouldRightMargin += menuLp.leftMargin + menuLp.rightMargin;
-//        }
-//
-//        ViewGroup.MarginLayoutParams titleLp = (MarginLayoutParams) mTvTitle.getLayoutParams();
-//        if (titleLp != null) {
-//            titleLp.leftMargin = shouldLeftMargin;
-//            titleLp.rightMargin = shouldRightMargin;
-//            mTvTitle.setLayoutParams(titleLp);
-//        }
     }
 
     /**
@@ -503,7 +532,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
         LayoutParams layoutParams = (LayoutParams) mTvTitle.getLayoutParams();
         layoutParams.rightMargin = marginEnd;
         mTvTitle.setLayoutParams(layoutParams);
-        resetTitleMargin();
+
     }
 
     /**
@@ -515,7 +544,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
         LayoutParams layoutParams = (LayoutParams) mTvTitle.getLayoutParams();
         layoutParams.leftMargin = marginStart;
         mTvTitle.setLayoutParams(layoutParams);
-        resetTitleMargin();
+
     }
 
     /**
@@ -532,7 +561,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
         }
         this.maxInFrame = max;
         refreshMenuList();
-        resetTitleMargin();
+
         return this;
     }
 
@@ -546,7 +575,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
     public XToolBarLayout setOptionColor(@ColorInt int optionColor) {
         this.optionColor = optionColor;
         refreshMenuList();
-        resetTitleMargin();
+
         return this;
     }
 
@@ -554,7 +583,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
     public XToolBarLayout setOptionBackground(Drawable drawable) {
         this.optionBackground = drawable;
         refreshMenuList();
-        resetTitleMargin();
+
         return this;
     }
 
@@ -568,7 +597,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
     public XToolBarLayout setOptionMarginEnd(int optionMarginEnd) {
         this.optionMarginEnd = optionMarginEnd;
         refreshMenuList();
-        resetTitleMargin();
+
         return this;
     }
 
@@ -582,7 +611,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
     public XToolBarLayout setOptionPadding(int optionPadding) {
         this.optionPadding = optionPadding;
         refreshMenuList();
-        resetTitleMargin();
+
         return this;
     }
 
@@ -599,7 +628,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
             this.optionDrawable = ContextCompat.getDrawable(mContext, R.drawable.xuikit_icon_plus_black);
         }
         refreshMenuList();
-        resetTitleMargin();
+
         return this;
     }
 
@@ -639,6 +668,11 @@ public class XToolBarLayout extends XCardRelativeLayout {
         return this;
     }
 
+    public XToolBarLayout setDimAmountEnable(boolean isDimAmountEnable) {
+        this.isDimAmountEnable = isDimAmountEnable;
+        return this;
+    }
+
 
     /**
      * 刷新布局数据
@@ -648,7 +682,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
     public void refreshMenuList(List<XToolBarMenuItem> list) {
         this.mMenuList = list;
         refreshMenuList();
-        resetTitleMargin();
+
     }
 
     /**
@@ -659,7 +693,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
     public void setMenuList(List<XToolBarMenuItem> list) {
         this.mMenuList = list;
         refreshMenuList();
-        resetTitleMargin();
+
     }
 
     public List<XToolBarMenuItem> getMenuList() {
@@ -739,7 +773,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
                 // 都添加进去，最后再添加一个optionIcon
                 addedList.addAll(mMenuInToolBarList);
             }
-            XToolBarMenuItem optionMenuItem = new XToolBarMenuItem(optionDrawable, "#xtb_plus_00_optionIcon#");
+            XToolBarMenuItem optionMenuItem = new XToolBarMenuItem(optionDrawable, "__xtb_plus_00_optionIcon__");
             optionMenuItem.setBackground(optionBackground);
             optionMenuItem.setIconColorFilter(optionColor);
             optionMenuItem.setIconPadding(optionPadding);
@@ -770,7 +804,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
                 if (TextUtils.isEmpty(item.getText())) {
                     throw new RuntimeException("this is TEXT_ONLY type ,text can't be null when index== " + i);
                 }
-                TextView textView = new AppCompatTextView(mContext);
+                XTextView textView = new XTextView(mContext);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         mCustomSize + mCustomTextPadding * 2, mCustomSize);
                 params.gravity = Gravity.CENTER;
@@ -807,7 +841,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
                 });
                 mMenuLayout.addView(textView);
             } else { // 其他两种在toolbar上效果一样
-                ImageView imageView = new AppCompatImageView(mContext);
+                XImageView imageView = new XImageView(mContext);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mCustomSize, mCustomSize);
                 params.gravity = Gravity.CENTER;
                 if (i != addedList.size() - 1) {
@@ -835,13 +869,13 @@ public class XToolBarLayout extends XCardRelativeLayout {
                 }
 
                 if (item.getIconColorFilter() != -1) {
-                    imageView.setColorFilter(item.getIconColorFilter());
+                    imageView.setColorFilterOverride(item.getIconColorFilter());
                 } else if (optionColor != 0) {
-                    imageView.setColorFilter(optionColor);
+                    imageView.setColorFilterOverride(optionColor);
                 }
 
                 // menu + 点击事件处理
-                if ("#xtb_plus_00_optionIcon#".equals(item.getTag())) {
+                if ("__xtb_plus_00_optionIcon__".equals(item.getTag())) {
                     imageView.setOnClickListener(this::showPopMenu);
                 } else {
                     final int position = i;
@@ -892,12 +926,18 @@ public class XToolBarLayout extends XCardRelativeLayout {
     // init 弹窗上的数据
     private void initPopupMenuView() {
         mPopupMenu = new XPopupMenu.Builder(mContext)
+                .setMenuArrowWidth(mPopupMenuArrowWidth)
+                .setMenuArrowHeight(mPopupMenuArrowHeight)
                 .setMenuWidth(mPopupMenuWidth)
                 .setPopupMenuAnimationStyle(R.style.XP_Animation_PopDownMenu_Right)
-                .setRadius(OsUtils.dp2px(mContext, 6f))
+                .setRadius(mPopMenuBackgroundRadius)
                 .setItemTextColor(item_textColor)
                 .setIconColorFilter(item_iconColorFilter)
+                .setItemHeight(mPopupMenuItemHeight)
                 .setDividerColor(item_dividerColor)
+                .setDividerHeight(item_dividerHeight)
+                .setDividerMarginEnd(item_dividerMarginEnd)
+                .setDividerMarginStart(item_dividerMarginStart)
                 .setItemLayoutPressedColor(item_layoutPressedColor)
                 .setMenuItemList(copyPopupMenuData(mMenuInPopList))
                 .setOnMenuItemClickListener((popupMenu, position, tag) -> {
@@ -911,6 +951,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
 
 
     private void showPopMenu(View anchor) {
+        ToastUtils.toast(mContext, "点击了菜单+");
         if (mPopupMenu != null) {
             mPopupMenu.show(anchor);
         }

@@ -4,19 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
     <com.pichs.xuikit.toolbar.XToolBarLayout
         android:id="@+id/xtoolbars"
-        app:xt_backIcon="@drawable/xuikit_icon_back_black"
-        app:xt_closeIcon="@drawable/xuikit_icon_close_black"
-        app:xt_title="打扫房间拉三等奖法拉第是就按了疯狂吉林省绝地反击了"
-        app:xt_title_marginStart="16dp"
-        app:xt_backIcon_marginStart="66dp"
         android:layout_width="match_parent"
-        android:layout_height="48dp" />
+        android:layout_height="wrap_content"
+        app:xp_toolbar_fitSystemStatusBar="true"
+        app:xp_toolbar_title_marginStart="16dp"
+        android:background="#146CF8"
+        app:xp_toolbar_menu_maxInFrame="1"
+        app:xp_toolbar_backIcon_colorFilter="@color/white"
+        app:xp_toolbar_title_marginEnd="166dp"
+        app:xp_toolbar_menu_horizontalSpacing="8dp"
+        app:xp_toolbar_menu_optionIcon="@drawable/xuikit_icon_plus_black"
+        app:xp_toolbar_menu_optionIcon_marginEnd="8dp"
+        app:xp_toolbar_title_layoutGravity="left"
+        app:xp_toolbar_title_textColor="@color/white"
+        app:xp_toolbar_popupMenuItem_textColor="@color/white"
+        app:xp_toolbar_menu_optionIcon_colorFilter="@color/white"
+        app:xp_toolbar_title="首页" />
 
     <com.pichs.common.widget.cardview.XCardButton
         android:id="@+id/btn1"
@@ -47,6 +56,7 @@
         android:text="普通粗细" />
 
     <com.pichs.common.widget.view.XButton
+        android:id="@+id/showMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

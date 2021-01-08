@@ -3,63 +3,70 @@
     <declare-styleable name="XToolBarLayout">
 
         <!--  是否做一个paddingTop='状态栏的高度'  -->
-        <attr name="xt_fitSystemStatusBar" format="boolean" />
+        <attr name="xp_toolbar_fitSystemStatusBar" format="boolean" />
         <!--    标题    -->
-        <attr name="xt_title" format="string" localization="suggested" />
-        <attr name="xt_title_textSize" format="dimension" />
-        <attr name="xt_title_textColor" format="color" />
-        <attr name="xt_title_marginStart" format="dimension" />
-        <attr name="xt_title_marginEnd" format="dimension" />
-        <attr name="xt_title_layoutGravity" format="enum">
+        <attr name="xp_toolbar_title" format="string" localization="suggested" />
+        <attr name="xp_toolbar_title_textSize" format="dimension" />
+        <attr name="xp_toolbar_title_textColor" format="color" />
+        <attr name="xp_toolbar_title_marginStart" format="dimension" />
+        <attr name="xp_toolbar_title_marginEnd" format="dimension" />
+        <attr name="xp_toolbar_title_layoutGravity" format="enum">
             <enum name="center" value="0" />
             <enum name="left" value="1" />
             <enum name="right" value="2" />
         </attr>
-        <attr name="xt_title_TextStyle" format="enum">
+        <attr name="xp_toolbar_title_TextStyle" format="enum">
             <enum name="normal" value="0" />
             <enum name="bold" value="1" />
             <enum name="italic" value="2" />
         </attr>
 
         <!--    backIcon 默认back 最左边的图标，不要局限于返回键，可以做其他  -->
-        <attr name="xt_backIcon" format="reference|color" />
-        <attr name="xt_backIcon_background" format="reference|color" />
-        <attr name="xt_backIcon_colorFilter" format="color" />
-        <attr name="xt_backIcon_padding" format="dimension" />
-        <attr name="xt_backIcon_marginStart" format="dimension" />
-        <attr name="xt_backIcon_visibility" format="enum">
+        <attr name="xp_toolbar_backIcon" format="reference|color" />
+        <attr name="xp_toolbar_backIcon_background" format="reference|color" />
+        <attr name="xp_toolbar_backIcon_colorFilter" format="color" />
+        <attr name="xp_toolbar_backIcon_padding" format="dimension" />
+        <attr name="xp_toolbar_backIcon_marginStart" format="dimension" />
+        <attr name="xp_toolbar_backIcon_visibility" format="enum">
             <enum name="visible" value="0" />
             <enum name="gone" value="1" />
         </attr>
 
         <!--     closeIcon  默认close  左边第二个图标 不要局限于关闭键，可以做其他  -->
-        <attr name="xt_closeIcon" format="reference|color" />
-        <attr name="xt_closeIcon_background" format="reference|color" />
-        <attr name="xt_closeIcon_colorFilter" format="color" />
-        <attr name="xt_closeIcon_padding" format="dimension" />
-        <attr name="xt_closeIcon_marginStart" format="dimension" />
-        <attr name="xt_closeIcon_visibility" format="enum">
+        <attr name="xp_toolbar_closeIcon" format="reference|color" />
+        <attr name="xp_toolbar_closeIcon_background" format="reference|color" />
+        <attr name="xp_toolbar_closeIcon_colorFilter" format="color" />
+        <attr name="xp_toolbar_closeIcon_padding" format="dimension" />
+        <attr name="xp_toolbar_closeIcon_marginStart" format="dimension" />
+        <attr name="xp_toolbar_closeIcon_visibility" format="enum">
             <enum name="visible" value="0" />
             <enum name="gone" value="1" />
         </attr>
 
         <!--   menu 设置     -->
-        <attr name="xt_menu_maxInFrame" format="integer" />
-        <attr name="xt_menu_optionIcon" format="reference|color" />
-        <attr name="xt_menu_optionIconBackground" format="reference|color" />
-        <attr name="xt_menu_optionIcon_padding" format="dimension" />
-        <attr name="xt_menu_optionIcon_colorFilter" format="color" />
-        <attr name="xt_menu_optionIcon_marginEnd" format="dimension" />
+        <attr name="xp_toolbar_menu_maxInFrame" format="integer" />
+        <attr name="xp_toolbar_menu_optionIcon" format="reference|color" />
+        <attr name="xp_toolbar_menu_optionIconBackground" format="reference|color" />
+        <attr name="xp_toolbar_menu_optionIcon_padding" format="dimension" />
+        <attr name="xp_toolbar_menu_optionIcon_colorFilter" format="color" />
+        <attr name="xp_toolbar_menu_optionIcon_marginEnd" format="dimension" />
         <!--    menu上的横向间隔    -->
-        <attr name="xt_menu_horizontal_spacing" format="dimension" />
-        <attr name="xt_popup_menu_width" format="dimension" />
+        <attr name="xp_toolbar_menu_horizontalSpacing" format="dimension" />
+        <attr name="xp_toolbar_popupMenu_width" format="dimension" />
 
         <!--    新增属性 控制item列表属性     -->
-        <attr name="xt_popup_menu_item_textColor" format="color" />
-        <attr name="xt_popup_menu_item_iconColorFilter" format="color" />
-        <attr name="xt_popup_menu_item_dividerColor" format="color" />
-        <attr name="xt_popup_menu_item_layoutPressedColor" format="color" />
+        <attr name="xp_toolbar_popupMenuItem_textColor" format="color" />
+        <attr name="xp_toolbar_popupMenuItem_iconColorFilter" format="color" />
+        <attr name="xp_toolbar_popupMenuItem_dividerColor" format="color" />
+        <attr name="xp_toolbar_popupMenuItem_dividerMarginEnd" format="dimension" />
+        <attr name="xp_toolbar_popupMenuItem_dividerHeight" format="dimension" />
+        <attr name="xp_toolbar_popupMenuItem_dividerMarginStart" format="dimension" />
+        <attr name="xp_toolbar_popupMenuItem_layoutPressedColor" format="color" />
         <!--   弹窗的背景色  -->
-        <attr name="xt_popup_menu_backgroundColor" format="color" />
+        <attr name="xp_toolbar_popupMenu_backgroundColor" format="color" />
+        <attr name="xp_toolbar_popupMenu_backgroundRadius" format="dimension" />
+        <attr name="xp_toolbar_popupMenu_arrowHeight" format="dimension" />
+        <attr name="xp_toolbar_popupMenu_arrowWidth" format="dimension" />
+        <attr name="xp_toolbar_popupMenu_itemHeight" format="dimension" />
     </declare-styleable>
 </resources>
