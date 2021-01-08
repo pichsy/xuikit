@@ -2,6 +2,7 @@ package com.pichs.app.xwidget;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -54,13 +55,13 @@ public class MainActivity extends AppCompatActivity {
         XToolBarLayout toolBarLayout = findViewById(R.id.xtoolbars);
 
         List<XToolBarMenuItem> list = new ArrayList<>();
-        list.add(new XToolBarMenuItem("你好",R.mipmap.ic_launcher_round,"_me_good2"));
-        list.add(new XToolBarMenuItem("我好",R.mipmap.ic_launcher_round,"_me_good3"));
-        list.add(new XToolBarMenuItem("他好",R.mipmap.ic_launcher_round,"_me_good4"));
-        list.add(new XToolBarMenuItem("她好",R.mipmap.ic_launcher_round,"_me_good5"));
-        list.add(new XToolBarMenuItem("走好",R.mipmap.ic_launcher_round,"_me_good6"));
-        list.add(new XToolBarMenuItem("打本",R.mipmap.ic_launcher_round,"_me_good7"));
-        list.add(new XToolBarMenuItem("特斯",R.mipmap.ic_launcher_round,"_me_good8"));
+        list.add(new XToolBarMenuItem("你好", R.mipmap.ic_launcher_round, "_me_good2"));
+        list.add(new XToolBarMenuItem("我好", R.mipmap.ic_launcher_round, "_me_good3"));
+        list.add(new XToolBarMenuItem("他好", R.mipmap.ic_launcher_round, "_me_good4"));
+        list.add(new XToolBarMenuItem("她好", R.mipmap.ic_launcher_round, "_me_good5"));
+        list.add(new XToolBarMenuItem("走好", R.mipmap.ic_launcher_round, "_me_good6"));
+        list.add(new XToolBarMenuItem("打本", R.mipmap.ic_launcher_round, "_me_good7"));
+        list.add(new XToolBarMenuItem("特斯", R.mipmap.ic_launcher_round, "_me_good8"));
         toolBarLayout.setOnBackClickListener(new OnXToolBarBackClickListener() {
             @Override
             public void onBackClick(View v) {
@@ -95,5 +96,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.tv3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, NavigationActivity.class));
+            }
+        });
     }
 }
