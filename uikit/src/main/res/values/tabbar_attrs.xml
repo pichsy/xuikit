@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="BottomBarItem">
+        <!--默认状态下的图标-->
+        <attr name="xp_iconNormal" format="reference"/>
+        <!--选中状态下的图标-->
+        <attr name="xp_iconSelected" format="reference"/>
+
+        <!--底部文字-->
+        <attr name="xp_itemText" format="string"/>
+        <!--文字大小-->
+        <attr name="xp_itemTextSize" format="dimension"/>
+        <!--文字加粗-->
+        <attr name="xp_itemTextBold" format="boolean"/>
+        <!--默认状态下的文字颜色-->
+        <attr name="xp_textColorNormal" format="color"/>
+        <!--选中状态下的文字颜色-->
+        <attr name="xp_textColorSelected" format="color"/>
+
+        <!--文字和图标的顶部距离-->
+        <attr name="xp_itemMarginTop" format="dimension"/>
+
+        <!--是否开启触摸背景效果-->
+        <attr name="xp_openTouchBg" format="boolean"/>
+        <!--设置触摸背景-->
+        <attr name="xp_touchDrawable" format="reference"/>
+
+        <!--设置图标的宽度-->
+        <attr name="xp_iconWidth" format="dimension"/>
+        <!--设置图标的高度-->
+        <attr name="xp_iconHeight" format="dimension"/>
+
+        <!--设置BottomBarItem的padding-->
+        <attr name="xp_itemPadding" format="dimension"/>
+
+        <!--设置未读数字体大小-->
+        <attr name="xp_unreadTextSize" format="dimension"/>
+        <!--设置未读数字体颜色-->
+        <attr name="xp_unreadTextColor" format="reference"/>
+        <!--设置未读数背景色-->
+        <attr name="xp_unreadTextBg" format="reference"/>
+
+        <!--设置提示消息字体大小-->
+        <attr name="xp_msgTextSize" format="dimension"/>
+        <!--设置提示消息字体颜色-->
+        <attr name="xp_msgTextColor" format="reference"/>
+        <!--设置提示消息背景-->
+        <attr name="xp_msgTextBg" format="reference"/>
+
+        <!--设置提示点背景-->
+        <attr name="xp_notifyPointBg" format="reference"/>
+
+        <!--设置未读数组阈值 大于阈值的数字将显示为 n+ n为设置的阈值-->
+        <attr name="xp_unreadThreshold" format="integer"/>
+
+        <!--lottie文件名-->
+        <attr name="xp_lottieJson" format="string"/>
+
+    </declare-styleable>
+
+    <declare-styleable name="BottomBarLayout">
+        <attr name="xp_smoothScroll" format="boolean"/>
+    </declare-styleable>
+
+</resources>

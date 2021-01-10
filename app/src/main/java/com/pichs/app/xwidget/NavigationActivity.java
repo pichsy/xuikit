@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.chaychan.library.BottomBarItem;
-import com.chaychan.library.BottomBarLayout;
+import com.pichs.xuikit.tabbar.BottomBarItem;
+import com.pichs.xuikit.tabbar.BottomBarLayout;
 import com.pichs.app.xwidget.fragment.TabFragment;
 import com.pichs.common.widget.utils.XDisplayHelper;
 

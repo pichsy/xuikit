@@ -1,4 +1,4 @@
-package com.pichs.xuikit.slidebar;
+package com.pichs.xuikit.sidebar;
 
 import android.content.Context;
 import android.content.res.TypedArray;

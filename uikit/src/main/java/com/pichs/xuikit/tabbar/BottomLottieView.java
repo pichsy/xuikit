@@ -1,4 +1,4 @@
-package com.chaychan.library;
+package com.pichs.xuikit.tabbar;
 
 import android.content.Context;
 import android.os.Parcelable;
@@ -7,21 +7,19 @@ import android.util.AttributeSet;
 import com.airbnb.lottie.LottieAnimationView;
 
 /**
- * @author ChayChan
- * @description: 去除LottieAnimationView的缓存
- * @date 2020/11/23  16:02
+ * 去除LottieAnimationView的缓存
  */
-class MyLottieAnimationView extends LottieAnimationView {
+class BottomLottieView extends LottieAnimationView {
 
-    public MyLottieAnimationView(Context context) {
+    public BottomLottieView(Context context) {
         super(context);
     }
 
-    public MyLottieAnimationView(Context context, AttributeSet attrs) {
+    public BottomLottieView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public MyLottieAnimationView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BottomLottieView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

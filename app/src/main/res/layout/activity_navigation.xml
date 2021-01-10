@@ -13,7 +13,7 @@
         android:layout_weight="1" />
 
 
-    <com.chaychan.library.BottomBarLayout
+    <com.pichs.xuikit.tabbar.BottomBarLayout
         android:id="@+id/tablayout"
         android:background="#ffffff"
         android:layout_width="match_parent"

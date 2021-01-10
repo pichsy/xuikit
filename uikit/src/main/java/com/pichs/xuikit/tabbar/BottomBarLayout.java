@@ -1,4 +1,4 @@
-package com.chaychan.library;
+package com.pichs.xuikit.tabbar;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,10 +12,10 @@ import java.util.List;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.pichs.xuikit.R;
+
 /**
- * @author ChayChan
- * @description: 底部页签根节点
- * @date 2017/6/23  11:02
+ * 底部页签根节点
  */
 public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageChangeListener {
 
@@ -35,7 +35,7 @@ public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageCha
     public BottomBarLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BottomBarLayout);
-        mSmoothScroll = ta.getBoolean(R.styleable.BottomBarLayout_smoothScroll, false);
+        mSmoothScroll = ta.getBoolean(R.styleable.BottomBarLayout_xp_smoothScroll, false);
         ta.recycle();
     }
 
@@ -169,7 +169,7 @@ public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageCha
      */
     private void resetState() {
         if (mCurrentItem < mItemViews.size()) {
-            if (mItemViews.get(mCurrentItem).isSelected()){
+            if (mItemViews.get(mCurrentItem).isSelected()) {
                 mItemViews.get(mCurrentItem).refreshTab(false);
             }
         }

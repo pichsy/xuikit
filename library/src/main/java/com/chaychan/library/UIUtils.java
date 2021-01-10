@@ -3,15 +3,17 @@ package com.chaychan.library;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+import androidx.core.content.ContextCompat;
+
 /**
  * @author chaychan
  * @date 2017/3/7  17:19
  */
-public class UIUtils {
+ class UIaaUtils {
     /**
      * dip-->px
      */
-    public static int dip2Px(Context context,int dip) {
+    public static int dip2Px(Context context, int dip) {
         // px/dip = density;
         // density = dpi/160
         // 320*480 density = 1 1px = 1dp
@@ -28,16 +30,16 @@ public class UIUtils {
      * @param spValue
      * @return
      */
-    public static int sp2px(Context context,float spValue) {
+    public static int sp2px(Context context, float spValue) {
         final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * fontScale + 0.5f);
     }
 
-    public static int getColor(Context context,int colorId){
-        return context.getResources().getColor(colorId);
+    public static int getColor(Context context, int colorId) {
+        return ContextCompat.getColor(context, colorId);
     }
 
-    public static Drawable getDrawable(Context context,int resId){
-        return  context.getResources().getDrawable(resId);
+    public static Drawable getDrawable(Context context, int resId) {
+        return ContextCompat.getDrawable(context, resId);
     }
 }
