@@ -1,4 +1,3 @@
 include ':app'
 include ':uikit'
-include ':library'
 rootProject.name = "xuikit"

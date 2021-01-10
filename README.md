@@ -10,9 +10,23 @@
         
        implementation 'com.github.pichsy:xuikit:1.0'
        
+       
 
 ## 用法
+
+    
       
+      // 头部导航
+      XToolbarLayout
+      
+      // 常用cells布局
+      CommonItemView
+      
+      // 底部导航
+      BottomBarLayout
+      
+      // 底部导航item
+      BottomBarItem
 
 
 ## 升级内容
