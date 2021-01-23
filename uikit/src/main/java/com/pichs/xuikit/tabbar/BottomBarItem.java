@@ -373,11 +373,11 @@ public class BottomBarItem extends LinearLayout {
         public Builder(Context context) {
             this.context = context;
             titleTextBold = false;
-            titleTextSize = XDisplayHelper.sp2px(context, 12);
+            titleTextSize = XDisplayHelper.sp2px(context, 12f);
             titleNormalColor = Color.parseColor("#999999");
             titleSelectedColor = Color.parseColor("#F44336");
-            unreadTextSize = XDisplayHelper.sp2px(context, 10);
-            msgTextSize = XDisplayHelper.sp2px(context, 6);
+            unreadTextSize = XDisplayHelper.sp2px(context, 10f);
+            msgTextSize = XDisplayHelper.sp2px(context, 6f);
             unreadTextColor = Color.WHITE;
             unreadNumThreshold = 99;
             msgTextColor = Color.WHITE;

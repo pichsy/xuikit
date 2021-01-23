@@ -78,8 +78,8 @@ public class XPopupMenu {
 
         public Builder(Context context) {
             this.context = context;
-            this.menuArrowHeight = XDisplayHelper.dp2px(context, 22);
-            this.menuWidth = XDisplayHelper.dp2px(context, 44);
+            this.menuArrowHeight = XDisplayHelper.dp2px(context, 22f);
+            this.menuWidth = XDisplayHelper.dp2px(context, 44f);
         }
 
         public Builder setMenuHeight(int menuHeight) {
@@ -246,7 +246,7 @@ public class XPopupMenu {
             }
             Log.d("XPopupMenu==>", "size:" + size);
             if (builder.itemHeight <= 0) {
-                mMenuHeight = XDisplayHelper.dp2px(mContext, 48) * size;
+                mMenuHeight = XDisplayHelper.dp2px(mContext, 48f) * size;
                 Log.d("XPopupMenu==>", "48dp:" + XDisplayHelper.px2dp(mContext, 48));
             } else {
                 mMenuHeight = builder.itemHeight * size;
@@ -255,7 +255,7 @@ public class XPopupMenu {
         Log.d("XPopupMenu==>", "mMenuHeight:" + mMenuHeight);
         Log.d("XPopupMenu==>", "mMenuWidth:" + mMenuWidth);
         popActions = new PopActions.Builder(mContext)
-                .setOffsetY(XDisplayHelper.dp2px(mContext, 7))
+                .setOffsetY(XDisplayHelper.dp2px(mContext, 7f))
                 .setRadius(builder.radius)
                 .setContentWidth(mMenuWidth)
                 .setContentHeight(mMenuHeight)
@@ -263,7 +263,7 @@ public class XPopupMenu {
                 .setArrowWidth(builder.menuArrowWidth)
                 .setArrowHeight(builder.menuArrowHeight)
                 .setAnimationStyle(builder.popupMenuAnimationStyle)
-                .setSideMargin(XDisplayHelper.dp2px(mContext, 6))
+                .setSideMargin(XDisplayHelper.dp2px(mContext, 6f))
                 .setBackgroundColor(builder.popupMenuBgColor)
                 .build();
         popActions.show(anchor);

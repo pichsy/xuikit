@@ -111,8 +111,8 @@ public class XToolBarLayout extends XCardRelativeLayout {
     public XToolBarLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.mContext = context;
-        this.mCustomSize = XDisplayHelper.dp2px(context, 34);
-        this.mCustomTextPadding = XDisplayHelper.dp2px(context, 4);
+        this.mCustomSize = XDisplayHelper.dp2px(context, 34f);
+        this.mCustomTextPadding = XDisplayHelper.dp2px(context, 4f);
         statusBarHeight = XStatusBarHelper.getStatusBarHeight(context);
         initView(context, attrs, defStyleAttr);
     }

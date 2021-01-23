@@ -82,8 +82,8 @@ public class NavigationActivity extends AppCompatActivity {
         return new BottomBarItem.Builder(this)
                 .titleTextBold(true)
                 .titleTextSize(9)
-                .iconHeight(XDisplayHelper.dp2px(this, 24))
-                .iconWidth(XDisplayHelper.dp2px(this, 24))
+                .iconHeight(XDisplayHelper.dp2px(this, 24f))
+                .iconWidth(XDisplayHelper.dp2px(this, 24f))
                 .titleNormalColor(R.color.tab_normal_color)
                 .titleSelectedColor(R.color.tab_selected_color)
 
