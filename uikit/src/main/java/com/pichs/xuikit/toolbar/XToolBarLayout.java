@@ -89,7 +89,6 @@ public class XToolBarLayout extends XCardRelativeLayout {
     private int mPopMenuBackgroundRadius;
     private int mPopupMenuArrowWidth;
     private int mPopupMenuArrowHeight;
-    private boolean isDimAmountEnable = false;
     private int mPopupMenuItemHeight;
 
     public void setOnBackClickListener(OnXToolBarBackClickListener onBackClickListener) {
@@ -184,6 +183,27 @@ public class XToolBarLayout extends XCardRelativeLayout {
         setPopupMenuArrowWidth(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_popupMenu_arrowWidth, XDisplayHelper.dp2px(context, 12)));
         setPopupMenuItemHeight(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_popupMenu_itemHeight, 0));
         ta.recycle();
+
+        initListener();
+    }
+
+    private void initListener() {
+        mIvBack.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mBackClickListener != null) {
+                    mBackClickListener.onBackClick(v);
+                }
+            }
+        });
+        mIvClose.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mBackClickListener != null) {
+                    mBackClickListener.onCloseClick(v);
+                }
+            }
+        });
     }
 
     private XToolBarLayout setPopupMenuItemDividerMarginStart(int marginStart) {
@@ -288,14 +308,6 @@ public class XToolBarLayout extends XCardRelativeLayout {
     public void setBackIcon(Drawable backIcon) {
         if (backIcon != null) {
             mIvBack.setImageDrawable(backIcon);
-            mIvBack.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mBackClickListener != null) {
-                        mBackClickListener.onBackClick(v);
-                    }
-                }
-            });
         }
     }
 
@@ -377,14 +389,6 @@ public class XToolBarLayout extends XCardRelativeLayout {
     public void setCloseIcon(Drawable closeIcon) {
         if (closeIcon != null) {
             mIvClose.setImageDrawable(closeIcon);
-            mIvClose.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mBackClickListener != null) {
-                        mBackClickListener.onCloseClick(v);
-                    }
-                }
-            });
         }
     }
 
@@ -628,7 +632,6 @@ public class XToolBarLayout extends XCardRelativeLayout {
             this.optionDrawable = ContextCompat.getDrawable(mContext, R.drawable.xuikit_icon_plus_black);
         }
         refreshMenuList();
-
         return this;
     }
 
@@ -667,12 +670,6 @@ public class XToolBarLayout extends XCardRelativeLayout {
         this.mHorizontalSpacing = horizontalSpacing;
         return this;
     }
-
-    public XToolBarLayout setDimAmountEnable(boolean isDimAmountEnable) {
-        this.isDimAmountEnable = isDimAmountEnable;
-        return this;
-    }
-
 
     /**
      * 刷新布局数据
