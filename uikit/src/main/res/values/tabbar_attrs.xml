@@ -1,66 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--  图标  -->
+    <attr name="xp_btr_iconSelectedColor" format="color" />
+    <attr name="xp_btr_iconNormalColor" format="color" />
+    <attr name="xp_btr_iconNormal" format="reference|color" />
+    <attr name="xp_btr_iconSelected" format="reference|color" />
+
+    <!--  文字  -->
+    <attr name="xp_btr_textSelectedColor" format="color" />
+    <attr name="xp_btr_textNormalColor" format="color" />
+    <attr name="xp_btr_text" format="string" />
+    <attr name="xp_btr_textSize" format="dimension" />
+    <attr name="xp_btr_textColor" format="color" />
+
+    <attr name="xp_btr_textStyle" format="enum">
+        <enum name="normal" value="0" />
+        <enum name="bold" value="1" />
+        <enum name="italic" value="2" />
+    </attr>
+
+    <!--  图标的宽高  -->
+    <attr name="xp_btr_iconWidth" format="dimension" />
+    <attr name="xp_btr_iconHeight" format="dimension" />
+    <!--  图标的内边距  -->
+    <attr name="xp_btr_iconPadding" format="dimension" />
+    <!--  文字和图片间距  -->
+    <attr name="xp_btr_textIconSpacing" format="dimension" />
+
+    <!--设置未读数字体大小-->
+    <attr name="xp_btr_unreadTextSize" format="dimension" />
+    <attr name="xp_btr_unreadNum" format="integer" />
+    <!--设置未读数字体颜色-->
+    <attr name="xp_btr_unreadTextColor" format="color" />
+    <!--设置未读数背景色-->
+    <attr name="xp_btr_unreadTextBackground" format="color|reference" />
+    <attr name="xp_btr_unreadTextBackgroundRadius" format="dimension" />
+    <!--设置未读数组阈值 大于阈值的数字将显示为 n+ n为设置的阈值-->
+    <attr name="xp_btr_unreadMaxNumber" format="integer" />
+
+    <!--设置提示消息字体大小-->
+    <attr name="xp_btr_msgText" format="string" />
+    <attr name="xp_btr_msgTextSize" format="dimension" />
+    <!--设置提示消息字体颜色-->
+    <attr name="xp_btr_msgTextColor" format="color" />
+    <!--设置提示消息背景-->
+    <attr name="xp_btr_msgTextBackground" format="color|reference" />
+    <attr name="xp_btr_msgTextBackgroundRadius" format="dimension" />
+    <!--设置提示点背景色-->
+    <attr name="xp_btr_notifyPointBackgroundColor" format="color" />
+    <!--  提示点半径大小  -->
+    <attr name="xp_btr_notifyPointRadius" format="dimension" />
+    <!-- lottie文件名 -->
+    <attr name="xp_btr_lottieJson" format="string" />
 
     <declare-styleable name="BottomBarItem">
-        <!--默认状态下的图标-->
-        <attr name="xp_iconNormal" format="reference"/>
-        <!--选中状态下的图标-->
-        <attr name="xp_iconSelected" format="reference"/>
+        <attr name="xp_ignoreGlobalTypeface" />
+        <attr name="xp_btr_iconHeight" />
+        <attr name="xp_btr_iconWidth" />
+        <attr name="xp_btr_iconSelected" />
+        <attr name="xp_btr_iconNormal" />
+        <attr name="xp_btr_iconSelectedColor" />
+        <attr name="xp_btr_iconNormalColor" />
+        <!--  图标的内边距  -->
+        <attr name="xp_btr_iconPadding" />
 
-        <!--底部文字-->
-        <attr name="xp_itemText" format="string"/>
-        <!--文字大小-->
-        <attr name="xp_itemTextSize" format="dimension"/>
-        <!--文字加粗-->
-        <attr name="xp_itemTextBold" format="boolean"/>
-        <!--默认状态下的文字颜色-->
-        <attr name="xp_textColorNormal" format="color"/>
-        <!--选中状态下的文字颜色-->
-        <attr name="xp_textColorSelected" format="color"/>
+        <!--  文字和图片间距  -->
+        <attr name="xp_btr_textIconSpacing" />
 
-        <!--文字和图标的顶部距离-->
-        <attr name="xp_itemMarginTop" format="dimension"/>
-
-        <!--是否开启触摸背景效果-->
-        <attr name="xp_openTouchBg" format="boolean"/>
-        <!--设置触摸背景-->
-        <attr name="xp_touchDrawable" format="reference"/>
-
-        <!--设置图标的宽度-->
-        <attr name="xp_iconWidth" format="dimension"/>
-        <!--设置图标的高度-->
-        <attr name="xp_iconHeight" format="dimension"/>
-
-        <!--设置BottomBarItem的padding-->
-        <attr name="xp_itemPadding" format="dimension"/>
+        <!--  文字  -->
+        <attr name="xp_btr_textSelectedColor" />
+        <attr name="xp_btr_textNormalColor" />
+        <attr name="xp_btr_text" />
+        <attr name="xp_btr_textSize" />
+        <attr name="xp_btr_textColor" />
+        <attr name="xp_btr_textStyle" />
 
         <!--设置未读数字体大小-->
-        <attr name="xp_unreadTextSize" format="dimension"/>
+        <attr name="xp_btr_unreadTextSize" />
+        <attr name="xp_btr_unreadNum" />
         <!--设置未读数字体颜色-->
-        <attr name="xp_unreadTextColor" format="reference"/>
+        <attr name="xp_btr_unreadTextColor" />
         <!--设置未读数背景色-->
-        <attr name="xp_unreadTextBg" format="reference"/>
-
-        <!--设置提示消息字体大小-->
-        <attr name="xp_msgTextSize" format="dimension"/>
-        <!--设置提示消息字体颜色-->
-        <attr name="xp_msgTextColor" format="reference"/>
-        <!--设置提示消息背景-->
-        <attr name="xp_msgTextBg" format="reference"/>
-
-        <!--设置提示点背景-->
-        <attr name="xp_notifyPointBg" format="reference"/>
-
+        <attr name="xp_btr_unreadTextBackground" />
+        <attr name="xp_btr_unreadTextBackgroundRadius" />
         <!--设置未读数组阈值 大于阈值的数字将显示为 n+ n为设置的阈值-->
-        <attr name="xp_unreadThreshold" format="integer"/>
-
-        <!--lottie文件名-->
-        <attr name="xp_lottieJson" format="string"/>
-
+        <attr name="xp_btr_unreadMaxNumber" />
+        <!--设置提示消息字体大小-->
+        <attr name="xp_btr_msgTextSize" />
+        <!--设置提示消息字体颜色-->
+        <attr name="xp_btr_msgTextColor" />
+        <attr name="xp_btr_msgText" />
+        <!--设置提示消息背景-->
+        <attr name="xp_btr_msgTextBackground" />
+        <attr name="xp_btr_msgTextBackgroundRadius" />
+        <!--设置提示点背景色-->
+        <attr name="xp_btr_notifyPointBackgroundColor" />
+        <!--  提示点半径大小  -->
+        <attr name="xp_btr_notifyPointRadius" />
+        <!-- lottie文件名 -->
+        <attr name="xp_btr_lottieJson" />
     </declare-styleable>
 
     <declare-styleable name="BottomBarLayout">
-        <attr name="xp_smoothScroll" format="boolean"/>
+        <attr name="xp_btr_smoothScroll" format="boolean" />
     </declare-styleable>
 
 </resources>

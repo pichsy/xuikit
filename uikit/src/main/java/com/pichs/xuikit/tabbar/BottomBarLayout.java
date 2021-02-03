@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +11,13 @@ import java.util.List;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.pichs.common.widget.cardview.XCardLinearLayout;
 import com.pichs.xuikit.R;
 
 /**
  * 底部页签根节点
  */
-public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageChangeListener {
+public class BottomBarLayout extends XCardLinearLayout implements ViewPager.OnPageChangeListener {
 
     private ViewPager mViewPager;
     private List<BottomBarItem> mItemViews = new ArrayList<>();
@@ -35,7 +35,7 @@ public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageCha
     public BottomBarLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BottomBarLayout);
-        mSmoothScroll = ta.getBoolean(R.styleable.BottomBarLayout_xp_smoothScroll, false);
+        mSmoothScroll = ta.getBoolean(R.styleable.BottomBarLayout_xp_btr_smoothScroll, false);
         ta.recycle();
     }
 
@@ -84,7 +84,7 @@ public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageCha
         }
 
         if (mCurrentItem < mItemViews.size())
-            mItemViews.get(mCurrentItem).refreshTab(true);
+            mItemViews.get(mCurrentItem).updateTab(true);
     }
 
     public void addItem(BottomBarItem item) {
@@ -114,7 +114,7 @@ public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageCha
     @Override
     public void onPageSelected(int position) {
         resetState();
-        mItemViews.get(position).refreshTab(true);
+        mItemViews.get(position).updateTab(true);
         if (onItemSelectedListener != null) {
             onItemSelectedListener.onItemSelected(getBottomItem(position), mCurrentItem, position);
         }
@@ -128,7 +128,7 @@ public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageCha
 
     private class MyOnClickListener implements OnClickListener {
 
-        private int currentIndex;
+        private final int currentIndex;
 
         public MyOnClickListener(int i) {
             this.currentIndex = i;
@@ -161,7 +161,7 @@ public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageCha
     private void updateTabState(int position) {
         resetState();
         mCurrentItem = position;
-        mItemViews.get(mCurrentItem).refreshTab(true);
+        mItemViews.get(mCurrentItem).updateTab(true);
     }
 
     /**
@@ -170,7 +170,7 @@ public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageCha
     private void resetState() {
         if (mCurrentItem < mItemViews.size()) {
             if (mItemViews.get(mCurrentItem).isSelected()) {
-                mItemViews.get(mCurrentItem).refreshTab(false);
+                mItemViews.get(mCurrentItem).updateTab(false);
             }
         }
     }
@@ -203,7 +203,7 @@ public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageCha
      * @param msg      未读数
      */
     public void setMsg(int position, String msg) {
-        mItemViews.get(position).setMsg(msg);
+        mItemViews.get(position).setMsgText(msg);
     }
 
     /**
@@ -212,7 +212,7 @@ public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageCha
      * @param position 底部标签的下标
      */
     public void hideMsg(int position) {
-        mItemViews.get(position).hideMsg();
+        mItemViews.get(position).setMsgText(null);
     }
 
     /**

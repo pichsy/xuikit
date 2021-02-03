@@ -11,5 +11,5 @@ import java.lang.annotation.RetentionPolicy;
 public @interface XToolBarTitleGravity {
     int CENTER = 0;// 居中
     int LEFT = 1;// 靠左
-    int RIGHT = 2;// 靠右
+    // int RIGHT = 2;// 靠右
 }

@@ -8,7 +8,6 @@ import java.io.Serializable;
 
 public class XToolBarMenuItem implements Serializable {
 
-
     // max 1000，越大显示越靠前
     private int priority = 0;
     @XToolBarShowType

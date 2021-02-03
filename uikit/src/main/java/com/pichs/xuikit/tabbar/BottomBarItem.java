@@ -3,69 +3,84 @@ package com.pichs.xuikit.tabbar;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.pichs.common.widget.cardview.XCardTextView;
 import com.pichs.common.widget.utils.XDisplayHelper;
+import com.pichs.common.widget.view.XImageView;
+import com.pichs.common.widget.view.XLinearLayout;
+import com.pichs.common.widget.view.XTextView;
 import com.pichs.xuikit.R;
 
 import java.util.Locale;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-
 
 /**
  * 底部tab条目
  */
 
-public class BottomBarItem extends LinearLayout {
-
+public class BottomBarItem extends XLinearLayout {
     private Context context;
-    private Drawable normalIcon;//普通状态图标的资源id
-    private Drawable selectedIcon;//选中状态图标的资源id
-    private String title;//文本
-    private boolean titleTextBold = false;//文字加粗
-    private int titleTextSize = 12;//文字大小 默认为12sp
-    private int titleNormalColor;    //描述文本的默认显示颜色
-    private int titleSelectedColor;  //述文本的默认选中显示颜色
-    private int marginTop = 0;//文字和图标的距离,默认0dp
-    private boolean openTouchBg = false;// 是否开启触摸背景，默认关闭
-    private Drawable touchDrawable;//触摸时的背景
-    private int iconWidth;//图标的宽度
-    private int iconHeight;//图标的高度
-    private int itemPadding;//BottomBarItem的padding
+    private String text;//文本
+    private int textStyle = Typeface.NORMAL;
+    private int textSize = 12;//文字大小 默认为12sp
+    private int textNormalColor;    //描述文本的默认显示颜色
+    private int textSelectedColor;  //述文本的默认选中显示颜色
+    private int textIconSpacing = 0;//文字和图标的距离,默认0dp
+    private int iconWidth = 0;//图标的宽度
+    private int iconHeight = 0;//图标的高度
     private int unreadTextSize = 10; //未读数默认字体大小10sp
-    private int unreadNumThreshold = 99;//未读数阈值
+    private int unreadMaxNumber = 99;//未读数阈值
     private int unreadTextColor;//未读数字体颜色
     private Drawable unreadTextBg;//未读数字体背景
     private int msgTextSize = 6; //消息默认字体大小6sp
     private int msgTextColor;//消息文字颜色
     private Drawable msgTextBg;//消息文字背景
-    private Drawable notifyPointBg;//小红点背景
     private String lottieJson; //lottie文件名
     private boolean useLottie;
 
-
-    private ImageView mImageView;
+    private XImageView mIvIcon;
     private LottieAnimationView mLottieView;
-    private TextView mTvUnread;
-    private TextView mTvNotify;
-    private TextView mTvMsg;
-    private TextView mTextView;
+    private XCardTextView mTvUnread;
+    private XCardTextView mTvNotify;
+    private XCardTextView mTvMsg;
+    private XTextView mTvTitle;
+    // 圆点背景色
+    @ColorInt
+    private int notifyPointBgColor;
+    // 圆点的半径
+    private int notifyPointRadius;
+    private boolean isIgnoreGlobalTypeface = true;
+    private int iconPadding = 0;
+    private Drawable iconSelectedDrawable;
+    private Drawable iconNormalDrawable;
+    private int iconSelectedColor;
+    private int iconNormalColor;
+
+    // 未读消息的背景圆角
+    private int unreadTextBgRadius;
+
+    // 消息提示背景圆角
+    private int msgTextBgRadius;
+    // 未读数量
+    private int unreadNum = 0;
+    // 消息文本
+    private CharSequence msgText;
+
 
     public BottomBarItem(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public BottomBarItem(Context context, @Nullable AttributeSet attrs) {
@@ -74,188 +89,376 @@ public class BottomBarItem extends LinearLayout {
 
     public BottomBarItem(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
         this.context = context;
-
+        setOrientation(VERTICAL);
+        setGravity(Gravity.CENTER);
+        View view = View.inflate(context, R.layout.xuikit_item_bottom_bar, null);
+        initView(view);
+        addView(view);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BottomBarItem);
-
-        initAttrs(ta); //初始化属性
-
+        if (ta != null) {
+            initAttrs(ta); //初始化属性
+        }
         ta.recycle();
-
-        checkValues();//检查值是否合法
-
         init();//初始化相关操作
     }
 
     private void initAttrs(TypedArray ta) {
-        normalIcon = ta.getDrawable(R.styleable.BottomBarItem_xp_iconNormal);
-        selectedIcon = ta.getDrawable(R.styleable.BottomBarItem_xp_iconSelected);
-
-        title = ta.getString(R.styleable.BottomBarItem_xp_itemText);
-        titleTextBold = ta.getBoolean(R.styleable.BottomBarItem_xp_itemTextBold, titleTextBold);
-        titleTextSize = ta.getDimensionPixelSize(R.styleable.BottomBarItem_xp_itemTextSize, XDisplayHelper.sp2px(context, titleTextSize));
-
-        titleNormalColor = ta.getColor(R.styleable.BottomBarItem_xp_textColorNormal, Color.GRAY);
-        titleSelectedColor = ta.getColor(R.styleable.BottomBarItem_xp_textColorSelected, Color.BLUE);
-
-        marginTop = ta.getDimensionPixelSize(R.styleable.BottomBarItem_xp_itemMarginTop, XDisplayHelper.dp2px(context, marginTop));
-
-        openTouchBg = ta.getBoolean(R.styleable.BottomBarItem_xp_openTouchBg, openTouchBg);
-        touchDrawable = ta.getDrawable(R.styleable.BottomBarItem_xp_touchDrawable);
-
-        iconWidth = ta.getDimensionPixelSize(R.styleable.BottomBarItem_xp_iconWidth, 0);
-        iconHeight = ta.getDimensionPixelSize(R.styleable.BottomBarItem_xp_iconHeight, 0);
-        itemPadding = ta.getDimensionPixelSize(R.styleable.BottomBarItem_xp_itemPadding, 0);
-
-        unreadTextSize = ta.getDimensionPixelSize(R.styleable.BottomBarItem_xp_unreadTextSize, XDisplayHelper.sp2px(context, unreadTextSize));
-        unreadTextColor = ta.getColor(R.styleable.BottomBarItem_xp_unreadTextColor, Color.WHITE);
-        unreadTextBg = ta.getDrawable(R.styleable.BottomBarItem_xp_unreadTextBg);
-
-        msgTextSize = ta.getDimensionPixelSize(R.styleable.BottomBarItem_xp_msgTextSize, XDisplayHelper.sp2px(context, msgTextSize));
-        msgTextColor = ta.getColor(R.styleable.BottomBarItem_xp_msgTextColor, Color.WHITE);
-        msgTextBg = ta.getDrawable(R.styleable.BottomBarItem_xp_msgTextBg);
-
-        notifyPointBg = ta.getDrawable(R.styleable.BottomBarItem_xp_notifyPointBg);
-
-        unreadNumThreshold = ta.getInteger(R.styleable.BottomBarItem_xp_unreadThreshold, unreadNumThreshold);
-
-        lottieJson = ta.getString(R.styleable.BottomBarItem_xp_lottieJson);
+        text = ta.getString(R.styleable.BottomBarItem_xp_btr_text);
+        isIgnoreGlobalTypeface = ta.getBoolean(R.styleable.BottomBarItem_xp_ignoreGlobalTypeface, isIgnoreGlobalTypeface);
+        textStyle = ta.getInt(R.styleable.BottomBarItem_xp_btr_textStyle, textStyle);
+        textSize = ta.getDimensionPixelSize(R.styleable.BottomBarItem_xp_btr_textSize, XDisplayHelper.sp2px(context, textSize));
+        textNormalColor = ta.getColor(R.styleable.BottomBarItem_xp_btr_textNormalColor, 0);
+        textSelectedColor = ta.getColor(R.styleable.BottomBarItem_xp_btr_textSelectedColor, 0);
+        textIconSpacing = ta.getDimensionPixelSize(R.styleable.BottomBarItem_xp_btr_textIconSpacing, XDisplayHelper.dp2px(context, textIconSpacing));
+        iconWidth = ta.getDimensionPixelSize(R.styleable.BottomBarItem_xp_btr_iconWidth, XDisplayHelper.dp2px(context, 22f));
+        iconHeight = ta.getDimensionPixelSize(R.styleable.BottomBarItem_xp_btr_iconHeight, XDisplayHelper.dp2px(context, 22f));
+        iconPadding = ta.getDimensionPixelSize(R.styleable.BottomBarItem_xp_btr_iconPadding, iconPadding);
+        iconSelectedDrawable = ta.getDrawable(R.styleable.BottomBarItem_xp_btr_iconSelected);
+        iconNormalDrawable = ta.getDrawable(R.styleable.BottomBarItem_xp_btr_iconNormal);
+        iconNormalColor = ta.getColor(R.styleable.BottomBarItem_xp_btr_iconNormalColor, 0);
+        iconSelectedColor = ta.getColor(R.styleable.BottomBarItem_xp_btr_iconSelectedColor, 0);
+        unreadNum = ta.getInt(R.styleable.BottomBarItem_xp_btr_unreadNum, 0);
+        unreadTextSize = ta.getDimensionPixelSize(R.styleable.BottomBarItem_xp_btr_unreadTextSize, XDisplayHelper.sp2px(context, unreadTextSize));
+        unreadTextColor = ta.getColor(R.styleable.BottomBarItem_xp_btr_unreadTextColor, Color.WHITE);
+        unreadTextBg = ta.getDrawable(R.styleable.BottomBarItem_xp_btr_unreadTextBackground);
+        unreadTextBgRadius = ta.getDimensionPixelSize(R.styleable.BottomBarItem_xp_btr_unreadTextBackgroundRadius, XDisplayHelper.dp2px(context, 2f));
+        msgTextSize = ta.getDimensionPixelSize(R.styleable.BottomBarItem_xp_btr_msgTextSize, XDisplayHelper.sp2px(context, msgTextSize));
+        msgTextColor = ta.getColor(R.styleable.BottomBarItem_xp_btr_msgTextColor, Color.WHITE);
+        msgText = ta.getString(R.styleable.BottomBarItem_xp_btr_msgText);
+        msgTextBg = ta.getDrawable(R.styleable.BottomBarItem_xp_btr_msgTextBackground);
+        msgTextBgRadius = ta.getDimensionPixelSize(R.styleable.BottomBarItem_xp_btr_msgTextBackgroundRadius, XDisplayHelper.dp2px(context, 2f));
+        notifyPointBgColor = ta.getColor(R.styleable.BottomBarItem_xp_btr_notifyPointBackgroundColor, Color.RED);
+        notifyPointRadius = ta.getColor(R.styleable.BottomBarItem_xp_btr_notifyPointRadius, XDisplayHelper.dp2px(context, 2));
+        unreadMaxNumber = ta.getInteger(R.styleable.BottomBarItem_xp_btr_unreadMaxNumber, unreadMaxNumber);
+        lottieJson = ta.getString(R.styleable.BottomBarItem_xp_btr_lottieJson);
         useLottie = !TextUtils.isEmpty(lottieJson);
     }
 
-    /**
-     * 检查传入的值是否完善
-     */
-    private void checkValues() {
-        if (!useLottie && normalIcon == null) {
-            throw new IllegalStateException("You have not set the normal icon");
-        }
-
-        if (!useLottie && selectedIcon == null) {
-            throw new IllegalStateException("You have not set the selected icon");
-        }
-
-        if (openTouchBg && touchDrawable == null) {
-            //如果有开启触摸背景效果但是没有传对应的drawable
-            throw new IllegalStateException("Touch effect is turned on, but touchDrawable is not specified");
-        }
-
-        if (unreadTextBg == null) {
-            unreadTextBg = ContextCompat.getDrawable(context, R.drawable.xuikit_shape_unread);
-        }
-
-        if (msgTextBg == null) {
-            msgTextBg = ContextCompat.getDrawable(context, R.drawable.xuikit_shape_msg);
-        }
-
-        if (notifyPointBg == null) {
-            notifyPointBg = ContextCompat.getDrawable(context, R.drawable.xuikit_shape_notify_point);
-        }
-    }
 
     private void init() {
-        setOrientation(VERTICAL);
-        setGravity(Gravity.CENTER);
-
-        View view = initView();
-
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mImageView.getLayoutParams();
-        if (iconWidth != 0 && iconHeight != 0) {
-            //如果有设置图标的宽度和高度，则设置ImageView的宽高
-            layoutParams.width = iconWidth;
-            layoutParams.height = iconHeight;
-        }
-
-        if (useLottie) {
-            mLottieView.setLayoutParams(layoutParams);
-            mLottieView.setAnimation(lottieJson);
-            mLottieView.setRepeatCount(0);
-        } else {
-            mImageView.setImageDrawable(normalIcon);
-            mImageView.setLayoutParams(layoutParams);
-        }
-
-        mTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleTextSize);//设置底部文字字体大小
-        mTextView.getPaint().setFakeBoldText(titleTextBold);
-        mTvUnread.setTextSize(TypedValue.COMPLEX_UNIT_PX, unreadTextSize);//设置未读数的字体大小
-        mTvUnread.setTextColor(unreadTextColor);//设置未读数字体颜色
-        mTvUnread.setBackground(unreadTextBg);//设置未读数背景
-
-        mTvMsg.setTextSize(TypedValue.COMPLEX_UNIT_PX, msgTextSize);//设置提示文字的字体大小
-        mTvMsg.setTextColor(msgTextColor);//设置提示文字的字体颜色
-        mTvMsg.setBackground(msgTextBg);//设置提示文字的背景颜色
-
-        mTvNotify.setBackground(notifyPointBg);//设置提示点的背景颜色
-
-        mTextView.setTextColor(titleNormalColor);//设置底部文字字体颜色
-        mTextView.setText(title);//设置标签文字
-
-        LayoutParams textLayoutParams = (LayoutParams) mTextView.getLayoutParams();
-        textLayoutParams.topMargin = marginTop;
-        mTextView.setLayoutParams(textLayoutParams);
-
-        if (openTouchBg) {
-            //如果有开启触摸背景
-            setBackground(touchDrawable);
-        }
-
-        addView(view);
+        this
+                .setIconHeight(iconHeight)
+                .setIconWidth(iconWidth)
+                .setIconPadding(iconPadding)
+                .setIconNormalColor(iconNormalColor)
+                .setIconSelectedColor(iconSelectedColor)
+                .setIconNormalDrawable(iconNormalDrawable)
+                .setIconSelectedDrawable(iconSelectedDrawable)
+                .setIgnoreGlobalTypeface(isIgnoreGlobalTypeface)
+                .setLottieJson(lottieJson)
+                .setText(text)
+                .setTextIconSpacing(textIconSpacing)
+                .setTextNormalColor(textNormalColor)
+                .setTextSelectedColor(textSelectedColor)
+                .setTextStyle(textStyle)
+                .setTextSize(textSize)
+                .setMsgTextBg(msgTextBg)
+                .setMsgTextBgRadius(msgTextBgRadius)
+                .setMsgTextColor(msgTextColor)
+                .setMsgText(msgText)
+                .setNotifyPointBgColor(notifyPointBgColor)
+                .setNotifyPointRadius(notifyPointRadius)
+                .setUnreadMaxNumber(unreadMaxNumber)
+                .setUnreadTextBg(unreadTextBg)
+                .setUnreadTextBgRadius(unreadTextBgRadius)
+                .setUnreadTextColor(unreadTextColor)
+                .setUnreadTextSize(unreadTextSize)
+                .setUnreadNum(unreadNum)
+                .updateTab()
+        ;
     }
 
-    @NonNull
-    private View initView() {
-        View view = View.inflate(context, R.layout.xuikit_item_bottom_bar, null);
-        if (itemPadding != 0) {
-            //如果有设置item的padding
-            view.setPadding(itemPadding, itemPadding, itemPadding, itemPadding);
-        }
-        mImageView = view.findViewById(R.id.iv_icon);
+    private void initView(View view) {
+        mIvIcon = view.findViewById(R.id.iv_btr_icon);
         mLottieView = view.findViewById(R.id.bottom_lottie_view);
         mTvUnread = view.findViewById(R.id.tv_unred_num);
-        mTvMsg = view.findViewById(R.id.tv_msg);
+        mTvMsg = view.findViewById(R.id.tv_btr_msg);
         mTvNotify = view.findViewById(R.id.tv_point);
-        mTextView = view.findViewById(R.id.tv_text);
-
-        mImageView.setVisibility(useLottie ? GONE : VISIBLE);
+        mTvTitle = view.findViewById(R.id.tv_btr_text);
+        mIvIcon.setVisibility(useLottie ? GONE : VISIBLE);
         mLottieView.setVisibility(useLottie ? VISIBLE : GONE);
-
-        return view;
     }
 
-    public ImageView getImageView() {
-        return mImageView;
+
+    public BottomBarItem setText(String text) {
+        if (text == null) {
+            this.text = null;
+            this.mTvTitle.setVisibility(GONE);
+            this.mTvTitle.setText("");
+            return this;
+        }
+        this.text = text;
+        this.mTvTitle.setVisibility(VISIBLE);
+        this.mTvTitle.setText(text);
+        return this;
     }
 
-    public TextView getTextView() {
-        return mTextView;
+    public BottomBarItem setTextSize(int textSizeSp) {
+        this.textSize = textSizeSp;
+        this.mTvTitle.setTextSize(this.textSize);
+        return this;
     }
 
-    public void setNormalIcon(Drawable normalIcon) {
-        this.normalIcon = normalIcon;
-        refreshTab();
+    /**
+     * 调用之后请再次调用updateTab方法生效
+     *
+     * @param textNormalColor
+     * @return
+     */
+    public BottomBarItem setTextNormalColor(@ColorInt int textNormalColor) {
+        this.textNormalColor = textNormalColor;
+        return this;
     }
 
-    public void setNormalIcon(int resId) {
-        setNormalIcon(ContextCompat.getDrawable(context, resId));
+    /**
+     * 调用之后请再次调用updateTab方法生效
+     *
+     * @param textSelectedColor
+     * @return
+     */
+    public BottomBarItem setTextSelectedColor(@ColorInt int textSelectedColor) {
+        this.textSelectedColor = textSelectedColor;
+        return this;
     }
 
-    public void setSelectedIcon(Drawable selectedIcon) {
-        this.selectedIcon = selectedIcon;
-        refreshTab();
+    public BottomBarItem setTextStyle(int textStyle) {
+        this.textStyle = textStyle;
+        this.mTvTitle.setTypeface(this.mTvTitle.getTypeface(), this.textStyle);
+        return this;
     }
 
-    public void setSelectedIcon(int resId) {
-        setSelectedIcon(ContextCompat.getDrawable(context, resId));
+    public BottomBarItem setTextIconSpacing(int textIconSpacing) {
+        this.textIconSpacing = textIconSpacing;
+        ViewGroup.MarginLayoutParams layoutParams = (MarginLayoutParams) this.mTvTitle.getLayoutParams();
+        if (layoutParams != null) {
+            layoutParams.topMargin = textIconSpacing;
+            this.mTvTitle.setLayoutParams(layoutParams);
+        }
+        return this;
     }
 
-    public void refreshTab(boolean isSelected) {
+    /**
+     * 调用后请手动调用updateTab生效
+     *
+     * @param iconHeight
+     * @return
+     */
+    public BottomBarItem setIconHeight(int iconHeight) {
+        this.iconHeight = iconHeight;
+        ViewGroup.LayoutParams layoutParams = this.mIvIcon.getLayoutParams();
+        if (layoutParams != null) {
+            layoutParams.height = this.iconHeight;
+            this.mIvIcon.setLayoutParams(layoutParams);
+        }
+        return this;
+    }
+
+    public BottomBarItem setIconWidth(int iconWidth) {
+        this.iconWidth = iconWidth;
+        ViewGroup.LayoutParams layoutParams = this.mIvIcon.getLayoutParams();
+        if (layoutParams != null) {
+            layoutParams.width = this.iconWidth;
+            this.mIvIcon.setLayoutParams(layoutParams);
+        }
+        return this;
+    }
+
+
+    /**
+     * 调用后请手动调用updateTab生效
+     *
+     * @param iconNormalColor
+     * @return
+     */
+    public BottomBarItem setIconNormalColor(@ColorInt int iconNormalColor) {
+        this.iconNormalColor = iconNormalColor;
+        return this;
+    }
+
+    /**
+     * 调用后请手动调用updateTab生效
+     *
+     * @param iconSelectedColor
+     * @return
+     */
+    public BottomBarItem setIconSelectedColor(@ColorInt int iconSelectedColor) {
+        this.iconSelectedColor = iconSelectedColor;
+        return this;
+    }
+
+    /**
+     * 调用后请手动调用updateTab生效
+     *
+     * @param iconNormalDrawable
+     * @return
+     */
+    public BottomBarItem setIconNormalDrawable(Drawable iconNormalDrawable) {
+        this.iconNormalDrawable = iconNormalDrawable;
+        return this;
+    }
+
+    /**
+     * 调用后请手动调用updateTab生效
+     *
+     * @param iconSelectedDrawable
+     * @return
+     */
+    public BottomBarItem setIconSelectedDrawable(Drawable iconSelectedDrawable) {
+        this.iconSelectedDrawable = iconSelectedDrawable;
+        return this;
+    }
+
+    public BottomBarItem setIgnoreGlobalTypeface(boolean ignoreGlobalTypeface) {
+        this.isIgnoreGlobalTypeface = ignoreGlobalTypeface;
+        mTvTitle.setIgnoreGlobalTypeface(this.isIgnoreGlobalTypeface);
+        return this;
+    }
+
+    public BottomBarItem setIconPadding(int iconPadding) {
+        this.iconPadding = iconPadding;
+        this.mIvIcon.setPadding(this.iconPadding, this.iconPadding, this.iconPadding, this.iconPadding);
+        return this;
+    }
+
+    public BottomBarItem setLottieJson(String lottieJson) {
+        this.lottieJson = lottieJson;
+        this.useLottie = !TextUtils.isEmpty(this.lottieJson);
+        return this;
+    }
+
+    public BottomBarItem setUnreadTextBg(Drawable unreadTextBg) {
+        this.unreadTextBg = unreadTextBg;
+        this.mTvUnread.setBackground(unreadTextBg);
+        return this;
+    }
+
+    public BottomBarItem setUnreadTextBgRadius(int unreadTextBgRadius) {
+        this.unreadTextBgRadius = unreadTextBgRadius;
+        this.mTvUnread.setRadius(this.unreadTextBgRadius);
+        return this;
+    }
+
+    public BottomBarItem setUnreadTextColor(int unreadTextColor) {
+        this.unreadTextColor = unreadTextColor;
+        this.mTvUnread.setTextColor(this.unreadTextColor);
+        return this;
+    }
+
+    public BottomBarItem setUnreadTextSize(int textSizeSp) {
+        this.unreadTextSize = textSizeSp;
+        this.mTvUnread.setTextSize(this.unreadTextSize);
+        return this;
+    }
+
+    public int getUnreadMaxNumber() {
+        return unreadMaxNumber;
+    }
+
+    public BottomBarItem setUnreadMaxNumber(int unreadNumThreshold) {
+        this.unreadMaxNumber = unreadNumThreshold;
+        if (unreadNum <= 0) {
+            mTvUnread.setVisibility(GONE);
+        } else if (unreadNum <= unreadMaxNumber) {
+            mTvUnread.setText(String.valueOf(unreadNum));
+        } else {
+            mTvUnread.setText(String.format(Locale.CHINA, "%d+", unreadMaxNumber));
+        }
+        return this;
+    }
+
+    public BottomBarItem setUnreadNum(int unreadNum) {
+        this.unreadNum = unreadNum;
+        setTextViewVisible(mTvUnread);
+        if (this.unreadNum <= 0) {
+            mTvUnread.setVisibility(GONE);
+        } else if (this.unreadNum <= unreadMaxNumber) {
+            mTvUnread.setText(String.valueOf(this.unreadNum));
+        } else {
+            mTvUnread.setText(String.format(Locale.CHINA, "%d+", unreadMaxNumber));
+        }
+        return this;
+    }
+
+    public void showNotify() {
+        setTextViewVisible(mTvNotify);
+    }
+
+    public void hideNotify() {
+        mTvNotify.setVisibility(GONE);
+    }
+
+    public BottomBarItem setNotifyPointBgColor(int notifyPointBgColor) {
+        this.notifyPointBgColor = notifyPointBgColor;
+        this.mTvNotify.setBackgroundColor(this.notifyPointBgColor);
+        return this;
+    }
+
+    public BottomBarItem setNotifyPointRadius(int notifyPointRadius) {
+        this.notifyPointRadius = notifyPointRadius;
+        this.mTvNotify.setRadius(this.notifyPointRadius);
+        return this;
+    }
+
+    /**
+     * 为null则隐藏
+     *
+     * @param msgText CharSequence
+     * @return BottomBarItem
+     */
+    public BottomBarItem setMsgText(CharSequence msgText) {
+        if (msgText == null) {
+            this.mTvMsg.setVisibility(GONE);
+            this.msgText = null;
+            this.mTvMsg.setText("");
+            return this;
+        }
+        this.msgText = msgText;
+        setTextViewVisible(mTvMsg);
+        this.mTvMsg.setText(msgText);
+        return this;
+    }
+
+    public BottomBarItem setMsgTextColor(int msgTextColor) {
+        this.msgTextColor = msgTextColor;
+        this.mTvMsg.setTextColor(this.msgTextColor);
+        return this;
+    }
+
+    public BottomBarItem setMsgTextBgRadius(int msgTextBgRadius) {
+        this.msgTextBgRadius = msgTextBgRadius;
+        return this;
+    }
+
+    public BottomBarItem setMsgTextBg(Drawable msgTextBg) {
+        this.msgTextBg = msgTextBg;
+        this.mTvMsg.setBackground(this.msgTextBg);
+        return this;
+    }
+
+    public BottomBarItem setMsgTextSize(int msgTextSize) {
+        this.msgTextSize = msgTextSize;
+        this.mTvMsg.setTextSize(this.msgTextSize);
+        return this;
+    }
+
+    private void setTextViewVisible(TextView tv) {
+        //都设置为不可见
+        mTvUnread.setVisibility(GONE);
+        mTvMsg.setVisibility(GONE);
+        mTvNotify.setVisibility(GONE);
+        //设置为可见
+        tv.setVisibility(VISIBLE);
+    }
+
+    public void updateTab(boolean isSelected) {
         setSelected(isSelected);
-        refreshTab();
+        updateTab();
     }
 
-    public void refreshTab() {
+    public BottomBarItem updateTab() {
         if (useLottie) {
+            mIvIcon.setVisibility(VISIBLE);
             if (isSelected()) {
                 mLottieView.playAnimation();
             } else {
@@ -264,328 +467,29 @@ public class BottomBarItem extends LinearLayout {
                 mLottieView.setProgress(0);
             }
         } else {
-            mImageView.setImageDrawable(isSelected() ? selectedIcon : normalIcon);
+            if (iconSelectedDrawable != null && iconNormalDrawable != null) {
+                mIvIcon.setVisibility(VISIBLE);
+                mIvIcon.setImageDrawable(isSelected() ? iconSelectedDrawable : iconNormalDrawable);
+                mIvIcon.setColorFilterOverride(isSelected() ? iconSelectedColor : iconNormalColor);
+            } else if (iconSelectedDrawable != null) {
+                mIvIcon.setVisibility(VISIBLE);
+                mIvIcon.setImageDrawable(iconSelectedDrawable);
+                mIvIcon.setColorFilterOverride(isSelected() ? iconSelectedColor : iconNormalColor);
+            } else if (iconNormalDrawable != null) {
+                mIvIcon.setVisibility(VISIBLE);
+                mIvIcon.setImageDrawable(iconNormalDrawable);
+                mIvIcon.setColorFilterOverride(isSelected() ? iconSelectedColor : iconNormalColor);
+            } else {
+                mIvIcon.setVisibility(GONE);
+            }
         }
-
-        mTextView.setTextColor(isSelected() ? titleSelectedColor : titleNormalColor);
-    }
-
-    private void setTvVisible(TextView tv) {
-        //都设置为不可见
-        mTvUnread.setVisibility(GONE);
-        mTvMsg.setVisibility(GONE);
-        mTvNotify.setVisibility(GONE);
-
-        tv.setVisibility(VISIBLE);//设置为可见
-    }
-
-    public int getUnreadNumThreshold() {
-        return unreadNumThreshold;
-    }
-
-    public void setUnreadNumThreshold(int unreadNumThreshold) {
-        this.unreadNumThreshold = unreadNumThreshold;
-    }
-
-    public void setUnreadNum(int unreadNum) {
-        setTvVisible(mTvUnread);
-        if (unreadNum <= 0) {
-            mTvUnread.setVisibility(GONE);
-        } else if (unreadNum <= unreadNumThreshold) {
-            mTvUnread.setText(String.valueOf(unreadNum));
-        } else {
-            mTvUnread.setText(String.format(Locale.CHINA, "%d+", unreadNumThreshold));
+        if (textNormalColor != 0) {
+            mTvTitle.setTextColor(isSelected() ? (textSelectedColor == 0 ? textNormalColor : textSelectedColor) : textNormalColor);
+        } else if ((textSelectedColor != 0)) {
+            mTvTitle.setTextColor(!isSelected() ? (textNormalColor == 0 ? textSelectedColor : textNormalColor) : textSelectedColor);
         }
-    }
-
-    public void setMsg(String msg) {
-        setTvVisible(mTvMsg);
-        mTvMsg.setText(msg);
-    }
-
-    public void hideMsg() {
-        mTvMsg.setVisibility(GONE);
-    }
-
-    public void showNotify() {
-        setTvVisible(mTvNotify);
-    }
-
-    public void hideNotify() {
-        mTvNotify.setVisibility(GONE);
-    }
-
-    public BottomBarItem create(Builder builder) {
-        this.context = builder.context;
-        this.normalIcon = builder.normalIcon;
-        this.selectedIcon = builder.selectedIcon;
-        this.title = builder.title;
-        this.titleTextBold = builder.titleTextBold;
-        this.titleTextSize = builder.titleTextSize;
-        this.titleNormalColor = builder.titleNormalColor;
-        this.titleSelectedColor = builder.titleSelectedColor;
-        this.marginTop = builder.marginTop;
-        this.openTouchBg = builder.openTouchBg;
-        this.touchDrawable = builder.touchDrawable;
-        this.iconWidth = builder.iconWidth;
-        this.iconHeight = builder.iconHeight;
-        this.itemPadding = builder.itemPadding;
-        this.unreadTextSize = builder.unreadTextSize;
-        this.unreadTextColor = builder.unreadTextColor;
-        this.unreadTextBg = builder.unreadTextBg;
-        this.unreadNumThreshold = builder.unreadNumThreshold;
-        this.msgTextSize = builder.msgTextSize;
-        this.msgTextColor = builder.msgTextColor;
-        this.msgTextBg = builder.msgTextBg;
-        this.notifyPointBg = builder.notifyPointBg;
-        this.lottieJson = builder.lottieJson;
-
-        checkValues();
-        init();
         return this;
     }
 
-    public static final class Builder {
-        private Context context;
-        private Drawable normalIcon;//普通状态图标的资源id
-        private Drawable selectedIcon;//选中状态图标的资源id
-        private String title;//标题
-        private boolean titleTextBold;//文字加粗
-        private int titleTextSize;//字体大小
-        private int titleNormalColor;    //描述文本的默认显示颜色
-        private int titleSelectedColor;  //述文本的默认选中显示颜色
-        private int marginTop;//文字和图标的距离
-        private boolean openTouchBg;// 是否开启触摸背景，默认关闭
-        private Drawable touchDrawable;//触摸时的背景
-        private int iconWidth;//图标的宽度
-        private int iconHeight;//图标的高度
-        private int itemPadding;//BottomBarItem的padding
-        private int unreadTextSize; //未读数字体大小
-        private int unreadNumThreshold;//未读数阈值
-        private int unreadTextColor;//未读数字体颜色
-        private Drawable unreadTextBg;//未读数文字背景
-        private int msgTextSize; //消息字体大小
-        private int msgTextColor;//消息文字颜色
-        private Drawable msgTextBg;//消息提醒背景颜色
-        private Drawable notifyPointBg;//小红点背景颜色
-        private String lottieJson; //lottie文件名
 
-        public Builder(Context context) {
-            this.context = context;
-            titleTextBold = false;
-            titleTextSize = XDisplayHelper.sp2px(context, 12f);
-            titleNormalColor = Color.parseColor("#999999");
-            titleSelectedColor = Color.parseColor("#F44336");
-            unreadTextSize = XDisplayHelper.sp2px(context, 10f);
-            msgTextSize = XDisplayHelper.sp2px(context, 6f);
-            unreadTextColor = Color.WHITE;
-            unreadNumThreshold = 99;
-            msgTextColor = Color.WHITE;
-        }
-
-        /**
-         * Sets the default icon's resourceId
-         */
-        public Builder normalIcon(Drawable normalIcon) {
-            this.normalIcon = normalIcon;
-            return this;
-        }
-
-        /**
-         * Sets the selected icon's resourceId
-         */
-        public Builder selectedIcon(Drawable selectedIcon) {
-            this.selectedIcon = selectedIcon;
-            return this;
-        }
-
-        /**
-         * Sets the title's resourceId
-         */
-        public Builder title(int titleId) {
-            this.title = context.getString(titleId);
-            return this;
-        }
-
-        /**
-         * Sets the title string
-         */
-        public Builder title(String title) {
-            this.title = title;
-            return this;
-        }
-
-        /**
-         * Sets the title's text bold
-         */
-        public Builder titleTextBold(boolean titleTextBold) {
-            this.titleTextBold = titleTextBold;
-            return this;
-        }
-
-        /**
-         * Sets the title's text size
-         */
-        public Builder titleTextSize(int titleTextSize) {
-            this.titleTextSize = XDisplayHelper.sp2px(context, titleTextSize);
-            return this;
-        }
-
-        /**
-         * Sets the title's normal color resourceId
-         */
-        public Builder titleNormalColor(int titleNormalColor) {
-            this.titleNormalColor = getColor(titleNormalColor);
-            return this;
-        }
-
-        /**
-         * Sets the title's selected color resourceId
-         */
-        public Builder titleSelectedColor(int titleSelectedColor) {
-            this.titleSelectedColor = getColor(titleSelectedColor);
-            return this;
-        }
-
-        /**
-         * Sets the item's margin top
-         */
-        public Builder marginTop(int marginTop) {
-            this.marginTop = marginTop;
-            return this;
-        }
-
-        /**
-         * Sets whether to open the touch background effect
-         */
-        public Builder openTouchBg(boolean openTouchBg) {
-            this.openTouchBg = openTouchBg;
-            return this;
-        }
-
-        /**
-         * Sets touch background
-         */
-        public Builder touchDrawable(Drawable touchDrawable) {
-            this.touchDrawable = touchDrawable;
-            return this;
-        }
-
-        /**
-         * Sets icon's width
-         */
-        public Builder iconWidth(int iconWidth) {
-            this.iconWidth = iconWidth;
-            return this;
-        }
-
-        /**
-         * Sets icon's height
-         */
-        public Builder iconHeight(int iconHeight) {
-            this.iconHeight = iconHeight;
-            return this;
-        }
-
-
-        /**
-         * Sets padding for item
-         */
-        public Builder itemPadding(int itemPadding) {
-            this.itemPadding = itemPadding;
-            return this;
-        }
-
-        /**
-         * Sets unread font size
-         */
-        public Builder unreadTextSize(int unreadTextSize) {
-            this.unreadTextSize = XDisplayHelper.sp2px(context, unreadTextSize);
-            return this;
-        }
-
-        /**
-         * Sets the number of unread array thresholds greater than the threshold to be displayed as n + n as the set threshold
-         */
-        public Builder unreadNumThreshold(int unreadNumThreshold) {
-            this.unreadNumThreshold = unreadNumThreshold;
-            return this;
-        }
-
-        /**
-         * Sets the message font size
-         */
-        public Builder msgTextSize(int msgTextSize) {
-            this.msgTextSize = XDisplayHelper.sp2px(context, msgTextSize);
-            return this;
-        }
-
-        /**
-         * Sets the message font background
-         */
-        public Builder unreadTextBg(Drawable unreadTextBg) {
-            this.unreadTextBg = unreadTextBg;
-            return this;
-        }
-
-        /**
-         * Sets unread font color
-         */
-        public Builder unreadTextColor(int unreadTextColor) {
-            this.unreadTextColor = getColor(unreadTextColor);
-            return this;
-        }
-
-        /**
-         * Sets the message font color
-         */
-        public Builder msgTextColor(int msgTextColor) {
-            this.msgTextColor = getColor(msgTextColor);
-            return this;
-        }
-
-        /**
-         * Sets the message font background
-         */
-        public Builder msgTextBg(Drawable msgTextBg) {
-            this.msgTextBg = msgTextBg;
-            return this;
-        }
-
-        /**
-         * Set the message prompt point background
-         */
-        public Builder notifyPointBg(Drawable notifyPointBg) {
-            this.notifyPointBg = notifyPointBg;
-            return this;
-        }
-
-        /**
-         * Set the name of lottie json file
-         */
-        public Builder lottieJson(String lottieJson) {
-            this.lottieJson = lottieJson;
-            return this;
-        }
-
-        /**
-         * Create a BottomBarItem object
-         */
-        public BottomBarItem create(Drawable normalIcon, Drawable selectedIcon, String text) {
-            this.normalIcon = normalIcon;
-            this.selectedIcon = selectedIcon;
-            title = text;
-
-            BottomBarItem bottomBarItem = new BottomBarItem(context);
-            return bottomBarItem.create(this);
-        }
-
-        public BottomBarItem create(int normalIconId, int selectedIconId, String text) {
-            return create(ContextCompat.getDrawable(context, normalIconId), ContextCompat.getDrawable(context, selectedIconId), text);
-        }
-
-        private int getColor(int colorId) {
-            return context.getResources().getColor(colorId);
-        }
-    }
 }

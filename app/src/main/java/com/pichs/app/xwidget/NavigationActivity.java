@@ -1,10 +1,12 @@
 package com.pichs.app.xwidget;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -79,16 +81,17 @@ public class NavigationActivity extends AppCompatActivity {
     }
 
     private BottomBarItem createBottomBarItem(int i) {
-        return new BottomBarItem.Builder(this)
-                .titleTextBold(true)
-                .titleTextSize(9)
-                .iconHeight(XDisplayHelper.dp2px(this, 24f))
-                .iconWidth(XDisplayHelper.dp2px(this, 24f))
-                .titleNormalColor(R.color.tab_normal_color)
-                .titleSelectedColor(R.color.tab_selected_color)
-
-                //还有很多属性，详情请查看Builder里面的方法
-                //There are still many properties, please see the methods in the Builder for details.
-                .create(mNormalIconIds[i], mSelectedIconIds[i], mTitles[i]);
+        return new BottomBarItem(this)
+                .setTextStyle(Typeface.BOLD)
+                .setTextSize(9)
+                .setIconWidth(XDisplayHelper.dp2px(this, 22))
+                .setIconHeight(XDisplayHelper.dp2px(this, 22))
+                .setTextIconSpacing(XDisplayHelper.dp2px(this, 3))
+                .setTextNormalColor(ContextCompat.getColor(this,R.color.tab_normal_color))
+                .setTextSelectedColor(ContextCompat.getColor(this,R.color.tab_selected_color))
+                .setIconSelectedDrawable(ContextCompat.getDrawable(this, mSelectedIconIds[i]))
+                .setIconNormalDrawable(ContextCompat.getDrawable(this, mNormalIconIds[i]))
+                .setText(mTitles[i])
+                .updateTab();
     }
 }
