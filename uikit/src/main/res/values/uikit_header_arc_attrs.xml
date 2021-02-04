@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="HeadArcView">
+        <attr name="xp_arc_arcHeight" format="dimension" />
+        <attr name="xp_arc_startColor" format="color" />
+        <attr name="xp_arc_endColor" format="color" />
+        <attr name="xp_arc_gradientOrientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+        <attr name="xp_arc_type" format="enum">
+            <enum name="inside" value="0" />
+            <enum name="outside" value="1" />
+        </attr>
+        <attr name="xp_arc_reverse" format="boolean" />
+    </declare-styleable>
+</resources>

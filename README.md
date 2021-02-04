@@ -7,9 +7,7 @@
 最新版本:  [![](https://jitpack.io/v/pichsy/xuikit.svg)](https://jitpack.io/#pichsy/xuikit)
 
         
-        
        implementation 'com.github.pichsy:xuikit:1.4'
-       
        
 
 ## 用法
@@ -27,7 +25,9 @@
       
       // 底部导航item
       BottomBarItem
-
+    
+    // 弧形头部，或者衔接布局
+    HeadArcView
 
 ## 升级内容
 

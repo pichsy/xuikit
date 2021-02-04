@@ -3,18 +3,15 @@ package com.pichs.app.xwidget;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pichs.common.widget.cardview.XCardButton;
 import com.pichs.common.widget.utils.XTypefaceHelper;
 import com.pichs.common.widget.view.XButton;
-import com.pichs.xdialog.action.PopActions;
 import com.pichs.xuikit.toolbar.OnXToolBarBackClickListener;
 import com.pichs.xuikit.toolbar.OnXToolBarMenuClickListener;
 import com.pichs.xuikit.toolbar.XToolBarLayout;
@@ -100,5 +97,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, NavigationActivity.class));
             }
         });
+
+
+        ImageView arcView = findViewById(R.id.arcView);
     }
 }
