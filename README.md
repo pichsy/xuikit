@@ -8,7 +8,7 @@
 
         
         
-       implementation 'com.github.pichsy:xuikit:1.0'
+       implementation 'com.github.pichsy:xuikit:1.4'
        
        
 

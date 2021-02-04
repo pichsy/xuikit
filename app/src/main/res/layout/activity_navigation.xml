@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#f1f1f1"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -16,6 +17,8 @@
     <com.pichs.xuikit.tabbar.BottomBarLayout
         android:id="@+id/tablayout"
         android:background="#ffffff"
+        app:xp_topDividerColor="@color/xp_config_color_red"
+        app:xp_topDividerHeight="2dp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:gravity="center"

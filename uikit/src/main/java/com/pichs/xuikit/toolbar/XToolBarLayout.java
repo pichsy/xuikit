@@ -923,6 +923,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
     // init 弹窗上的数据
     private void initPopupMenuView() {
         mPopupMenu = new XPopupMenu.Builder(mContext)
+                .setPopupMenuBgColor(menu_backgroundColor)
                 .setMenuArrowWidth(mPopupMenuArrowWidth)
                 .setMenuArrowHeight(mPopupMenuArrowHeight)
                 .setMenuWidth(mPopupMenuWidth)

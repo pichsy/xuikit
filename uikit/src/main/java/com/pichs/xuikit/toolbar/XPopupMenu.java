@@ -235,27 +235,27 @@ public class XPopupMenu {
         if (mMenuWidth == 0) {
             mMenuWidth = XDisplayHelper.getScreenWidth(mContext) * 2 / 5;
         }
-        Log.d("XPopupMenu==>", "mMenuHeight:" + mMenuHeight);
-        Log.d("XPopupMenu==>", "builder.itemHeight:" + builder.itemHeight);
-        Log.d("XPopupMenu==>", "mMenuItemList-size:" + mMenuItemList.size());
+//        Log.d("XPopupMenu==>", "mMenuHeight:" + mMenuHeight);
+//        Log.d("XPopupMenu==>", "builder.itemHeight:" + builder.itemHeight);
+//        Log.d("XPopupMenu==>", "mMenuItemList-size:" + mMenuItemList.size());
 
         if (mMenuHeight <= 0) {
             int size = mMenuItemList.size();
             if (size <= 0) {
                 size = 1;
             }
-            Log.d("XPopupMenu==>", "size:" + size);
+//            Log.d("XPopupMenu==>", "size:" + size);
             if (builder.itemHeight <= 0) {
                 mMenuHeight = XDisplayHelper.dp2px(mContext, 48f) * size;
-                Log.d("XPopupMenu==>", "48dp:" + XDisplayHelper.px2dp(mContext, 48));
+//                Log.d("XPopupMenu==>", "48dp:" + XDisplayHelper.dp2px(mContext, 48));
             } else {
                 mMenuHeight = builder.itemHeight * size;
             }
         }
-        Log.d("XPopupMenu==>", "mMenuHeight:" + mMenuHeight);
-        Log.d("XPopupMenu==>", "mMenuWidth:" + mMenuWidth);
+//        Log.d("XPopupMenu==>", "mMenuHeight:" + mMenuHeight);
+//        Log.d("XPopupMenu==>", "mMenuWidth:" + mMenuWidth);
         popActions = new PopActions.Builder(mContext)
-                .setOffsetY(XDisplayHelper.dp2px(mContext, 7f))
+                .setOffsetY(XDisplayHelper.dp2px(mContext, 7))
                 .setRadius(builder.radius)
                 .setContentWidth(mMenuWidth)
                 .setContentHeight(mMenuHeight)
@@ -263,7 +263,7 @@ public class XPopupMenu {
                 .setArrowWidth(builder.menuArrowWidth)
                 .setArrowHeight(builder.menuArrowHeight)
                 .setAnimationStyle(builder.popupMenuAnimationStyle)
-                .setSideMargin(XDisplayHelper.dp2px(mContext, 6f))
+                .setSideMargin(XDisplayHelper.dp2px(mContext, 6))
                 .setBackgroundColor(builder.popupMenuBgColor)
                 .build();
         popActions.show(anchor);
