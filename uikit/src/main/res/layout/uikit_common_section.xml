@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.pichs.common.widget.cardview.XCardConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
+
+    <com.pichs.common.widget.cardview.XCardImageView
+        android:id="@+id/iv_title_icon"
+        android:layout_width="6dp"
+        android:layout_height="20dp"
+        android:background="#42A5F5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:xp_radius="3dp" />
+
+    <com.pichs.common.widget.view.XTextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="标题标题"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_title_icon" />
+
+    <com.pichs.common.widget.cardview.XCardImageView
+        android:id="@+id/iv_more_icon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/xuikit_common_item_view_arrow_right_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:xp_colorFilter="#999999"
+        app:xp_radius="3dp" />
+
+    <com.pichs.common.widget.view.XTextView
+        android:id="@+id/tv_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="安徽"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/iv_more_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</com.pichs.common.widget.cardview.XCardConstraintLayout>

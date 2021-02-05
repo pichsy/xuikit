@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!--  通用条目View  -->
     <declare-styleable name="CommonItemView">
         <!--    基础属性    -->
@@ -43,6 +44,43 @@
         <attr name="common_switcher_width" format="dimension" />
         <attr name="common_switcher_visible" format="boolean" />
     </declare-styleable>
+
+    <!--  模块标题头  -->
+    <declare-styleable name="CommonSection">
+        <attr name="xp_section_titleIcon" format="color|reference" />
+        <attr name="xp_section_moreIcon" format="color|reference" />
+        <attr name="xp_section_titleText" format="string" />
+        <attr name="xp_section_moreText" format="string" />
+        <attr name="xp_section_titleIconRadius" format="dimension" />
+        <attr name="xp_section_moreIconRadius" format="dimension" />
+        <attr name="xp_section_titleIconMarginStart" format="dimension" />
+        <attr name="xp_section_titleIconMarginEnd" format="dimension" />
+        <attr name="xp_section_titleTextMarginStart" format="dimension" />
+        <attr name="xp_section_moreTextMarginEnd" format="dimension" />
+        <attr name="xp_section_moreIconMarginEnd" format="dimension" />
+        <attr name="xp_section_moreIconMarginStart" format="dimension" />
+        <attr name="xp_section_titleIconPadding" format="dimension" />
+        <attr name="xp_section_moreIconPadding" format="dimension" />
+        <attr name="xp_section_titleIconBgStartColor" format="color" />
+        <attr name="xp_section_titleIconBgColorOrientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+        <attr name="xp_section_titleIconBgEndColor" format="color" />
+        <attr name="xp_section_titleIconBgColor" format="color" />
+        <attr name="xp_section_moreIconBgStartColor" format="color" />
+        <attr name="xp_section_moreIconBgEndColor" format="color" />
+        <attr name="xp_section_moreIconBgColor" format="color" />
+        <attr name="xp_section_moreIconBgColorOrientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+        <attr name="xp_section_titleTextColor" format="color" />
+        <attr name="xp_section_titleTextSize" format="dimension" />
+        <attr name="xp_section_moreTextColor" format="color" />
+        <attr name="xp_section_moreTextSize" format="dimension" />
+    </declare-styleable>
+
 
     <!--  索引view  -->
     <declare-styleable name="WaveSideBar">
