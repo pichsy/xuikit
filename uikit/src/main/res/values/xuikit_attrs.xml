@@ -82,6 +82,16 @@
             <enum name="vertical" value="1" />
         </attr>
         <attr name="xp_section_titleTextColor" format="color" />
+        <attr name="xp_section_titleTextStyle" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="bold" value="1" />
+            <enum name="italic" value="2" />
+        </attr>
+        <attr name="xp_section_moreTextStyle" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="bold" value="1" />
+            <enum name="italic" value="2" />
+        </attr>
         <attr name="xp_section_titleTextSize" format="dimension" />
         <attr name="xp_section_moreTextColor" format="color" />
         <attr name="xp_section_moreTextSize" format="dimension" />

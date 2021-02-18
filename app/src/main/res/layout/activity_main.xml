@@ -135,6 +135,7 @@
         app:xp_section_moreText="更多"
         app:xp_section_moreTextColor="#7B07D5"
         app:xp_section_moreTextSize="16sp"
+        app:xp_section_moreTextStyle="bold"
         app:xp_section_titleIconBgEndColor="#9808EB"
         app:xp_section_titleIconBgStartColor="#42A5F5"
         app:xp_section_titleIconHeight="20dp"
@@ -142,7 +143,8 @@
         app:xp_section_titleIconWidth="8dp"
         app:xp_section_titleText="资讯"
         app:xp_section_titleTextColor="#0138FF"
-        app:xp_section_titleTextSize="20sp" />
+        app:xp_section_titleTextSize="20sp"
+        app:xp_section_titleTextStyle="bold" />
 
     <com.pichs.xuikit.cells.CommonItemView
         android:layout_width="match_parent"

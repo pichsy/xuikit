@@ -3,6 +3,7 @@ package com.pichs.xuikit.cells;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -76,6 +77,8 @@ public class CommonSection extends XCardConstraintLayout {
     private boolean titleIconVisibility = true;
     private boolean moreIconVisibility = true;
     private boolean titleTextIgnoreTypeface, moreTextIgnoreTypeface;
+    private int moreTextStyle = Typeface.NORMAL;
+    private int titleTextStyle = Typeface.NORMAL;
 
     public CommonSection(Context context) {
         super(context);
@@ -118,6 +121,8 @@ public class CommonSection extends XCardConstraintLayout {
         titleTextColor = ta.getColor(R.styleable.CommonSection_xp_section_titleTextColor, Color.BLACK);
         moreTextColor = ta.getColor(R.styleable.CommonSection_xp_section_moreTextColor, Color.GRAY);
 
+        moreTextStyle = ta.getInt(R.styleable.CommonSection_xp_section_moreTextStyle, Typeface.NORMAL);
+        titleTextStyle = ta.getInt(R.styleable.CommonSection_xp_section_titleTextStyle, Typeface.NORMAL);
 
         titleTextMarginStart = ta.getDimensionPixelSize(R.styleable.CommonSection_xp_section_titleTextMarginStart, XDisplayHelper.dp2px(context, 10f));
         moreTextMarginEnd = ta.getDimensionPixelSize(R.styleable.CommonSection_xp_section_moreTextMarginEnd, XDisplayHelper.dp2px(context, 5f));
@@ -153,6 +158,7 @@ public class CommonSection extends XCardConstraintLayout {
         setTitleTextColor(titleTextColor);
         setTitleTextMarginStart(titleTextMarginStart);
 
+
         setMoreTextIgnoreTypeface(moreTextIgnoreTypeface);
         setMoreText(moreText);
         setMoreTextSize(moreTextSize);
@@ -172,6 +178,10 @@ public class CommonSection extends XCardConstraintLayout {
         setMoreIconRadius(moreIconRadius);
         setMoreIconMargin(moreIconMarginStart, moreIconMarginEnd);
         setMoreIconSize(moreIconWidth, moreIconHeight);
+
+        setTitleTextStyle(titleTextStyle);
+        setMoreTextStyle(moreTextStyle);
+
         if (moreIcon == null && moreIconBgColor == 0 && moreIconBgStartColor == 0 && moreIconBgEndColor == 0) {
             setMoreIconVisibility(false);
         }
@@ -186,6 +196,22 @@ public class CommonSection extends XCardConstraintLayout {
         } else {
             setMoreIconBackgroundColor(moreIconBgColor);
         }
+    }
+
+    private CommonSection setTitleTextStyle(int titleTextStyle) {
+        this.titleTextStyle = titleTextStyle;
+        if (tvTitle != null) {
+            tvTitle.setTypeface(tvTitle.getTypeface(), this.titleTextStyle);
+        }
+        return this;
+    }
+
+    private CommonSection setMoreTextStyle(int moreTextStyle) {
+        this.moreTextStyle = moreTextStyle;
+        if (tvMore != null) {
+            tvMore.setTypeface(tvMore.getTypeface(), this.moreTextStyle);
+        }
+        return this;
     }
 
     public CommonSection setTitleTextIgnoreTypeface(boolean ignoreTypeface) {
