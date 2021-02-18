@@ -6,7 +6,7 @@
 最新版本:  [![](https://jitpack.io/v/pichsy/xuikit.svg)](https://jitpack.io/#pichsy/xuikit)
 
         
-       implementation 'com.github.pichsy:xuikit:1.4'
+       implementation 'com.github.pichsy:xuikit:1.5'
        
 
 ## 用法
