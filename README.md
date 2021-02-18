@@ -155,7 +155,7 @@
 - HeadArcView
     
     
-    
+ ```   
         <com.pichs.xuikit.arcview.HeadArcView
                android:layout_width="match_parent"
                android:layout_height="50dp"
@@ -167,14 +167,14 @@
                app:xp_arc_reverse="true"
                app:xp_arc_startColor="#1167F2"
                app:xp_arc_type="inside" />
-           
+```           
        
 5.  常用cells布局
 
 - CommonItemView
    
         
-        
+```          
        <com.pichs.xuikit.cells.CommonItemView
              android:layout_width="match_parent"
              android:layout_height="48dp"
@@ -188,12 +188,12 @@
              app:common_title_text="用户收藏"
              app:common_title_textColor="#fff"
              app:common_title_textStyle="bold" />
-   
+```   
    
 - CommonSection
   
   
-  
+```
      <com.pichs.xuikit.cells.CommonSection
             android:id="@+id/commonSection"
             android:layout_width="match_parent"
@@ -213,7 +213,7 @@
             app:xp_section_titleText="资讯"
             app:xp_section_titleTextColor="#0138FF"
             app:xp_section_titleTextSize="20sp" />
-
+```
 
 
 ## 升级内容
