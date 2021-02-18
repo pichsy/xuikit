@@ -2,9 +2,7 @@
 <com.pichs.common.widget.cardview.XCardConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp">
+    android:layout_height="match_parent">
 
     <com.pichs.common.widget.cardview.XCardImageView
         android:id="@+id/iv_title_icon"
