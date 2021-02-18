@@ -146,9 +146,9 @@ public class CommonSection extends XCardConstraintLayout {
             setTitleIconBackgroundColor(titleIconBgColor);
         }
 
-        if (moreIconBgStartColor!=0 || moreIconBgStartColor !=0){
-            setMoreIconBackgroundColor(moreIconBgStartColor, moreIconBgStartColor, moreIconBgColorOrientation);
-        }else {
+        if (moreIconBgStartColor != 0 || moreIconBgEndColor != 0) {
+            setMoreIconBackgroundColor(moreIconBgStartColor, moreIconBgEndColor, moreIconBgColorOrientation);
+        } else {
             setMoreIconBackgroundColor(moreIconBgColor);
         }
 
