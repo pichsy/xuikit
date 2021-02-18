@@ -9,9 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pichs.common.utils.utils.ToastUtils;
 import com.pichs.common.widget.cardview.XCardButton;
 import com.pichs.common.widget.utils.XTypefaceHelper;
 import com.pichs.common.widget.view.XButton;
+import com.pichs.xuikit.cells.CommonSection;
 import com.pichs.xuikit.toolbar.OnXToolBarBackClickListener;
 import com.pichs.xuikit.toolbar.OnXToolBarMenuClickListener;
 import com.pichs.xuikit.toolbar.XToolBarLayout;
@@ -29,6 +31,25 @@ public class MainActivity extends AppCompatActivity {
 
         TextView tv = findViewById(R.id.tv1);
         XCardButton btn = findViewById(R.id.btn1);
+        CommonSection commonSection = findViewById(R.id.commonSection);
+
+        commonSection.setMoreClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.toast(MainActivity.this,"更多");
+            }
+        });
+
+        commonSection.setTitleClickListener(new View.OnClickListener() {
+            @Override
+             public void onClick(View v) {
+                ToastUtils.toast(MainActivity.this,"标题");
+            }
+        });
+
+
+
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

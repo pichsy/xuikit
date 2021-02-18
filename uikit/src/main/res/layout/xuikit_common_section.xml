@@ -2,7 +2,7 @@
 <com.pichs.common.widget.cardview.XCardConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:paddingStart="16dp"
     android:paddingEnd="16dp">
 
@@ -11,8 +11,8 @@
         android:layout_width="6dp"
         android:layout_height="20dp"
         android:background="#42A5F5"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:xp_radius="3dp" />
 
@@ -23,8 +23,9 @@
         android:layout_marginStart="10dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="标题标题"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_title_icon" />
 
     <com.pichs.common.widget.cardview.XCardImageView
@@ -45,7 +46,6 @@
         android:layout_marginStart="10dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="安徽"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/iv_more_icon"

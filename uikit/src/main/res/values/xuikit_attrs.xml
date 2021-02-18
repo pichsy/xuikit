@@ -50,15 +50,21 @@
         <attr name="xp_section_titleIcon" format="color|reference" />
         <attr name="xp_section_moreIcon" format="color|reference" />
         <attr name="xp_section_titleText" format="string" />
+        <attr name="xp_section_titleText_ignoreTypeface" format="boolean" />
+        <attr name="xp_section_moreText_ignoreTypeface" format="boolean" />
         <attr name="xp_section_moreText" format="string" />
         <attr name="xp_section_titleIconRadius" format="dimension" />
         <attr name="xp_section_moreIconRadius" format="dimension" />
         <attr name="xp_section_titleIconMarginStart" format="dimension" />
         <attr name="xp_section_titleIconMarginEnd" format="dimension" />
+        <attr name="xp_section_titleIconWidth" format="dimension" />
+        <attr name="xp_section_titleIconHeight" format="dimension" />
         <attr name="xp_section_titleTextMarginStart" format="dimension" />
         <attr name="xp_section_moreTextMarginEnd" format="dimension" />
         <attr name="xp_section_moreIconMarginEnd" format="dimension" />
         <attr name="xp_section_moreIconMarginStart" format="dimension" />
+        <attr name="xp_section_moreIconWidth" format="dimension" />
+        <attr name="xp_section_moreIconHeight" format="dimension" />
         <attr name="xp_section_titleIconPadding" format="dimension" />
         <attr name="xp_section_moreIconPadding" format="dimension" />
         <attr name="xp_section_titleIconBgStartColor" format="color" />
