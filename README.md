@@ -16,7 +16,8 @@
 1. 头部导航
     XToolbarLayout
     
-      
+       
+       
         <com.pichs.xuikit.toolbar.XToolBarLayout
             android:id="@+id/xtoolbars"
             android:layout_width="match_parent"
@@ -35,7 +36,7 @@
             app:xp_toolbar_title_marginEnd="166dp"
             app:xp_toolbar_title_marginStart="16dp"
             app:xp_toolbar_title_textColor="@color/white" />
-       
+
    
 2. 底部导航
     BottomBarLayout <br>
@@ -151,27 +152,28 @@
 
     
 4. 弧形头部，或者衔接布局
-    HeadArcView
+- HeadArcView
     
     
     
-    <com.pichs.xuikit.arcview.HeadArcView
-           android:layout_width="match_parent"
-           android:layout_height="50dp"
-           android:layout_marginTop="10dp"
-           android:background="#FB9292"
-           app:xp_arc_arcHeight="30dp"
-           app:xp_arc_endColor="#FF00E1"
-           app:xp_arc_gradientOrientation="vertical"
-           app:xp_arc_reverse="true"
-           app:xp_arc_startColor="#1167F2"
-           app:xp_arc_type="inside" />
-       
+        <com.pichs.xuikit.arcview.HeadArcView
+               android:layout_width="match_parent"
+               android:layout_height="50dp"
+               android:layout_marginTop="10dp"
+               android:background="#FB9292"
+               app:xp_arc_arcHeight="30dp"
+               app:xp_arc_endColor="#FF00E1"
+               app:xp_arc_gradientOrientation="vertical"
+               app:xp_arc_reverse="true"
+               app:xp_arc_startColor="#1167F2"
+               app:xp_arc_type="inside" />
+           
        
 5.  常用cells布局
 
 - CommonItemView
    
+        
         
        <com.pichs.xuikit.cells.CommonItemView
              android:layout_width="match_parent"
@@ -187,7 +189,9 @@
              app:common_title_textColor="#fff"
              app:common_title_textStyle="bold" />
    
+   
 - CommonSection
+  
   
   
      <com.pichs.xuikit.cells.CommonSection
@@ -209,6 +213,8 @@
             app:xp_section_titleText="资讯"
             app:xp_section_titleTextColor="#0138FF"
             app:xp_section_titleTextSize="20sp" />
+
+
 
 ## 升级内容
 
