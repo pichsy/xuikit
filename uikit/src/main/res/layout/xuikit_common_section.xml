@@ -34,7 +34,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:xp_colorFilter="#999999"
         app:xp_radius="3dp" />
 
     <com.pichs.common.widget.view.XTextView

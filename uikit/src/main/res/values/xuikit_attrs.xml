@@ -68,6 +68,7 @@
         <attr name="xp_section_titleIconPadding" format="dimension" />
         <attr name="xp_section_moreIconPadding" format="dimension" />
         <attr name="xp_section_titleIconBgStartColor" format="color" />
+        <attr name="xp_section_titleIconColorFilter" format="color" />
         <attr name="xp_section_titleIconBgColorOrientation" format="enum">
             <enum name="horizontal" value="0" />
             <enum name="vertical" value="1" />
@@ -75,6 +76,7 @@
         <attr name="xp_section_titleIconBgEndColor" format="color" />
         <attr name="xp_section_titleIconBgColor" format="color" />
         <attr name="xp_section_moreIconBgStartColor" format="color" />
+        <attr name="xp_section_moreIconColorFilter" format="color" />
         <attr name="xp_section_moreIconBgEndColor" format="color" />
         <attr name="xp_section_moreIconBgColor" format="color" />
         <attr name="xp_section_moreIconBgColorOrientation" format="enum">

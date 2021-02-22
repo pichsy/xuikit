@@ -127,6 +127,8 @@
     <com.pichs.xuikit.cells.CommonSection
         android:id="@+id/commonSection"
         android:layout_width="match_parent"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:layout_height="48dp"
         android:background="#FFFFFF"
         app:xp_section_moreIcon="@drawable/xuikit_common_item_view_arrow_right_gray"

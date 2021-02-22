@@ -79,6 +79,8 @@ public class CommonSection extends XCardConstraintLayout {
     private boolean titleTextIgnoreTypeface, moreTextIgnoreTypeface;
     private int moreTextStyle = Typeface.NORMAL;
     private int titleTextStyle = Typeface.NORMAL;
+    private int titleIconColorFilter;
+    private int moreIconColorFilter;
 
     public CommonSection(Context context) {
         super(context);
@@ -136,6 +138,8 @@ public class CommonSection extends XCardConstraintLayout {
         titleIconHeight = ta.getDimensionPixelSize(R.styleable.CommonSection_xp_section_titleIconHeight, XDisplayHelper.dp2px(context, 16f));
         titleIconRadius = ta.getDimensionPixelSize(R.styleable.CommonSection_xp_section_titleIconRadius, 0);
         titleIconBgColor = ta.getColor(R.styleable.CommonSection_xp_section_titleIconBgColor, 0);
+        titleIconColorFilter = ta.getColor(R.styleable.CommonSection_xp_section_titleIconColorFilter, 0);
+        moreIconColorFilter = ta.getColor(R.styleable.CommonSection_xp_section_moreIconColorFilter, 0);
         titleIconBgStartColor = ta.getColor(R.styleable.CommonSection_xp_section_titleIconBgStartColor, 0);
         titleIconBgEndColor = ta.getColor(R.styleable.CommonSection_xp_section_titleIconBgEndColor, 0);
         titleIconBgColorOrientation = ta.getInt(R.styleable.CommonSection_xp_section_titleIconBgColorOrientation, GradientOrientation.VERTICAL);
@@ -166,6 +170,7 @@ public class CommonSection extends XCardConstraintLayout {
         setMoreTextMarginEnd(moreTextMarginEnd);
 
         setTitleIcon(titleIcon);
+        setTitleIconColorFilter(titleIconColorFilter);
         setTitleIconPadding(titleIconPadding);
         setTitleIconMargin(titleIconMarginStart, titleIconMarginEnd);
         setTitleIconRadius(titleIconRadius);
@@ -174,6 +179,7 @@ public class CommonSection extends XCardConstraintLayout {
             setTitleIconVisibility(false);
         }
         setMoreIcon(moreIcon);
+        setMoreIconColorFilter(moreIconColorFilter);
         setMoreIconPadding(moreIconPadding);
         setMoreIconRadius(moreIconRadius);
         setMoreIconMargin(moreIconMarginStart, moreIconMarginEnd);
@@ -196,6 +202,22 @@ public class CommonSection extends XCardConstraintLayout {
         } else {
             setMoreIconBackgroundColor(moreIconBgColor);
         }
+    }
+
+    private CommonSection setTitleIconColorFilter(int titleIconColorFilter) {
+        this.titleIconColorFilter = titleIconColorFilter;
+        if (ivTitleIcon != null) {
+            ivTitleIcon.setColorFilterOverride(this.titleIconColorFilter);
+        }
+        return this;
+    }
+
+    private CommonSection setMoreIconColorFilter(int moreIconColorFilter) {
+        this.moreIconColorFilter = moreIconColorFilter;
+        if (ivMoreIcon != null) {
+            ivMoreIcon.setColorFilterOverride(this.moreIconColorFilter);
+        }
+        return this;
     }
 
     private CommonSection setTitleTextStyle(int titleTextStyle) {
