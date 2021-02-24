@@ -13,6 +13,7 @@ import com.pichs.common.utils.utils.ToastUtils;
 import com.pichs.common.widget.cardview.XCardButton;
 import com.pichs.common.widget.utils.XTypefaceHelper;
 import com.pichs.common.widget.view.XButton;
+import com.pichs.xuikit.cells.CommonItemView;
 import com.pichs.xuikit.cells.CommonSection;
 import com.pichs.xuikit.toolbar.OnXToolBarBackClickListener;
 import com.pichs.xuikit.toolbar.OnXToolBarMenuClickListener;
@@ -29,6 +30,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        CommonItemView common_item = findViewById(R.id.common_item);
+
+        common_item.setOnSwitcherCheckedChangeListener(new CommonItemView.OnSwitcherChangedListener() {
+            @Override
+            public void onCheckChanged(boolean isChecked) {
+                if (isChecked) {
+                    common_item.setElevation(0);
+                } else {
+                    common_item.setElevation(10);
+                }
+                ToastUtils.toast(getApplicationContext(), "isChecked:" + isChecked);
+            }
+        });
+
         TextView tv = findViewById(R.id.tv1);
         XCardButton btn = findViewById(R.id.btn1);
         CommonSection commonSection = findViewById(R.id.commonSection);
@@ -36,18 +51,16 @@ public class MainActivity extends AppCompatActivity {
         commonSection.setMoreClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.toast(MainActivity.this,"更多");
+                ToastUtils.toast(MainActivity.this, "更多");
             }
         });
 
         commonSection.setTitleClickListener(new View.OnClickListener() {
             @Override
-             public void onClick(View v) {
-                ToastUtils.toast(MainActivity.this,"标题");
+            public void onClick(View v) {
+                ToastUtils.toast(MainActivity.this, "标题");
             }
         });
-
-
 
 
         btn.setOnClickListener(new View.OnClickListener() {

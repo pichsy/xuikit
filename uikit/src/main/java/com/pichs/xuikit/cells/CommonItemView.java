@@ -25,6 +25,9 @@ import com.pichs.common.widget.view.XTextView;
 import com.pichs.switcher.Switcher;
 import com.pichs.xuikit.R;
 
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
+
 /**
  * Created by pichs
  */
@@ -85,20 +88,33 @@ public class CommonItemView extends XCardRelativeLayout {
                 ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_width, ViewGroup.LayoutParams.WRAP_CONTENT),
                 ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_height, ViewGroup.LayoutParams.WRAP_CONTENT)
         );
+        setSwitcherElevation(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_elevation, 0));
 
         setSwitcherVisible(ta.getBoolean(R.styleable.CommonItemView_common_switcher_visible, false));
+        setSwitcherChecked(ta.getBoolean(R.styleable.CommonItemView_common_switcher_on, false));
 
         setSwitcherColor(
                 ta.getColor(R.styleable.CommonItemView_common_switcher_iconColor_switch, Color.WHITE),
                 ta.getColor(R.styleable.CommonItemView_common_switcher_bgColor_switchOn, Color.parseColor("#00C853")),
                 ta.getColor(R.styleable.CommonItemView_common_switcher_bgColor_switchOff, Color.parseColor("#d8d8d8"))
         );
-
         setSwitcherMarginEnd(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_marginEnd, 0));
-
         ta.recycle();
         setClickable(true);
         setGravity(Gravity.CENTER_VERTICAL);
+    }
+
+    private void setSwitcherElevation(int elevation) {
+        mSwitcher.setElevation(elevation);
+        invalidate();
+    }
+
+    private void setSwitcherChecked(boolean isChecked) {
+        mSwitcher.setChecked(isChecked, false);
+    }
+
+    public void setSwitcherChecked(boolean isChecked, boolean withAnimation) {
+        mSwitcher.setChecked(isChecked, withAnimation);
     }
 
     private void setSwitcherMarginEnd(int marginEnd) {
@@ -107,6 +123,18 @@ public class CommonItemView extends XCardRelativeLayout {
             layoutParams.setMarginEnd(marginEnd);
             mSwitcher.setLayoutParams(layoutParams);
         }
+    }
+
+    private OnSwitcherChangedListener mOnSwitcherChangedListener;
+
+    public void setOnSwitcherCheckedChangeListener(OnSwitcherChangedListener onSwitcherChangedListener) {
+        this.mOnSwitcherChangedListener = onSwitcherChangedListener;
+        mSwitcher.setOnCheckedChangeListener(checked -> {
+            if (mOnSwitcherChangedListener != null) {
+                mOnSwitcherChangedListener.onCheckChanged(checked);
+            }
+            return null;
+        });
     }
 
     private void setSwitcherVisible(boolean visible) {
@@ -287,5 +315,9 @@ public class CommonItemView extends XCardRelativeLayout {
         mTextView = findViewById(R.id.common_item_tv);
         mSubTextView = findViewById(R.id.common_item_sub_tv);
         mSwitcher = findViewById(R.id.common_item_switcher);
+    }
+
+    public interface OnSwitcherChangedListener {
+        void onCheckChanged(boolean isChecked);
     }
 }

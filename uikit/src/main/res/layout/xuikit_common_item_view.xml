@@ -2,6 +2,7 @@
 <com.pichs.common.widget.cardview.XCardRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+
     android:layout_height="48dp">
 
     <com.pichs.common.widget.cardview.XCardImageView
@@ -11,7 +12,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="16dp"
-        android:src="#f00"
+        android:scaleType="fitCenter"
         android:visibility="visible" />
 
     <com.pichs.common.widget.view.XTextView
@@ -20,22 +21,20 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/common_item_iv"
-        android:text="设置"
         android:textColor="#333333"
         android:textSize="15sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="12dp"
         android:gravity="center_vertical">
 
         <com.pichs.switcher.Switcher
             android:id="@+id/common_item_switcher"
             android:layout_width="40dp"
-            android:layout_height="20dp"
+            android:layout_height="30dp"
             android:checked="false"
             android:elevation="3dp"
             android:visibility="gone"
@@ -46,7 +45,6 @@
             android:id="@+id/common_item_sub_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="版本"
             android:textColor="#999999"
             android:textSize="14sp" />
 
@@ -54,6 +52,7 @@
             android:id="@+id/common_item_iv_arrow"
             android:layout_width="28dp"
             android:layout_height="28dp"
+            android:layout_marginEnd="12dp"
             android:src="@drawable/xuikit_common_item_view_arrow_right_gray" />
     </LinearLayout>
 

@@ -43,6 +43,8 @@
         <attr name="common_switcher_height" format="dimension" />
         <attr name="common_switcher_width" format="dimension" />
         <attr name="common_switcher_visible" format="boolean" />
+        <attr name="common_switcher_on" format="boolean" />
+        <attr name="common_switcher_elevation" format="dimension" />
     </declare-styleable>
 
     <!--  模块标题头  -->
