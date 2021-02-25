@@ -33,13 +33,25 @@
 
         <com.pichs.switcher.Switcher
             android:id="@+id/common_item_switcher"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
+            android:layout_width="44dp"
+            android:layout_height="26dp"
             android:checked="false"
             android:elevation="3dp"
             android:visibility="gone"
             app:xp_bgColor_switchOff="#d8d8d8"
             app:xp_bgColor_switchOn="#00C853" />
+
+        <com.pichs.common.widget.switcher.XSwitchButton
+            android:id="@+id/common_item_switch_button"
+            app:xp_swb_thumbCheckedColor="#ffffff"
+            app:xp_swb_thumbPressedColor="#ffffff"
+            app:xp_swb_backgroundColor_switchOff="#d8d8d8"
+            app:xp_swb_backgroundColor_switchOn="#00C853"
+            app:xp_swb_thumbColor="#ffffff"
+            app:xp_swb_thumbMargin="2dp"
+            android:visibility="visible"
+            android:layout_width="44dp"
+            android:layout_height="26dp" />
 
         <com.pichs.common.widget.view.XTextView
             android:id="@+id/common_item_sub_tv"

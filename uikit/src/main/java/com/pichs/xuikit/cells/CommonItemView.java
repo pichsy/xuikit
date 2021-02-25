@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import androidx.annotation.ColorInt;
 
 import com.pichs.common.widget.cardview.XCardImageView;
 import com.pichs.common.widget.cardview.XCardRelativeLayout;
+import com.pichs.common.widget.switcher.XSwitchButton;
 import com.pichs.common.widget.view.XImageView;
 import com.pichs.common.widget.view.XTextView;
 import com.pichs.switcher.Switcher;
@@ -39,8 +41,16 @@ public class CommonItemView extends XCardRelativeLayout {
     private XTextView mTextView;
     // 右侧
     private Switcher mSwitcher;
+    private XSwitchButton mXSwitchButton;
     private XTextView mSubTextView;
     private XImageView mArrowImageView;
+    // 默认的 开关样式
+    public static final int SWITCHER_TYPE_DEFAULT = 0;
+    // 有弹性的 开关样式
+    public static final int SWITCHER_TYPE_ELASTIC = 1;
+    private int switcherType = SWITCHER_TYPE_DEFAULT;
+    // 开关是否开着
+    private boolean isSwitcherVisible = false;
 
     public CommonItemView(Context context) {
         this(context, null);
@@ -82,17 +92,16 @@ public class CommonItemView extends XCardRelativeLayout {
         setSubTextTextSize(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_sub_text_textSize, -1));
         setSubTextTextStyle(ta.getInt(R.styleable.CommonItemView_common_sub_text_textStyle, 0));
         setSubTextMarginEnd(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_sub_text_marginEnd, DEF_MARGIN));
-
+        switcherType = ta.getInt(R.styleable.CommonItemView_common_switcher_type, 0);
+        setSwitcherType(switcherType);
         // switcher
         setSwitcherSize(
                 ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_width, ViewGroup.LayoutParams.WRAP_CONTENT),
                 ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_height, ViewGroup.LayoutParams.WRAP_CONTENT)
         );
         setSwitcherElevation(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_elevation, 0));
-
         setSwitcherVisible(ta.getBoolean(R.styleable.CommonItemView_common_switcher_visible, false));
         setSwitcherChecked(ta.getBoolean(R.styleable.CommonItemView_common_switcher_on, false));
-
         setSwitcherColor(
                 ta.getColor(R.styleable.CommonItemView_common_switcher_iconColor_switch, Color.WHITE),
                 ta.getColor(R.styleable.CommonItemView_common_switcher_bgColor_switchOn, Color.parseColor("#00C853")),
@@ -104,17 +113,32 @@ public class CommonItemView extends XCardRelativeLayout {
         setGravity(Gravity.CENTER_VERTICAL);
     }
 
+    private void setSwitcherType(int switcherType) {
+        if (!isSwitcherVisible) {
+            return;
+        }
+        if (switcherType == SWITCHER_TYPE_ELASTIC) {
+            mSwitcher.setVisibility(VISIBLE);
+            mXSwitchButton.setVisibility(GONE);
+        } else {
+            mSwitcher.setVisibility(GONE);
+            mXSwitchButton.setVisibility(VISIBLE);
+        }
+    }
+
     private void setSwitcherElevation(int elevation) {
         mSwitcher.setElevation(elevation);
         invalidate();
     }
 
     private void setSwitcherChecked(boolean isChecked) {
-        mSwitcher.setChecked(isChecked, false);
+        mSwitcher.setChecked(isChecked, true);
+        mXSwitchButton.setChecked(isChecked);
     }
 
     public void setSwitcherChecked(boolean isChecked, boolean withAnimation) {
         mSwitcher.setChecked(isChecked, withAnimation);
+        mXSwitchButton.setChecked(isChecked);
     }
 
     private void setSwitcherMarginEnd(int marginEnd) {
@@ -123,26 +147,44 @@ public class CommonItemView extends XCardRelativeLayout {
             layoutParams.setMarginEnd(marginEnd);
             mSwitcher.setLayoutParams(layoutParams);
         }
+        ViewGroup.MarginLayoutParams xswLP = (MarginLayoutParams) mXSwitchButton.getLayoutParams();
+        if (xswLP != null) {
+            xswLP.setMarginEnd(marginEnd);
+            mXSwitchButton.setLayoutParams(xswLP);
+        }
     }
 
     private OnSwitcherChangedListener mOnSwitcherChangedListener;
 
     public void setOnSwitcherCheckedChangeListener(OnSwitcherChangedListener onSwitcherChangedListener) {
         this.mOnSwitcherChangedListener = onSwitcherChangedListener;
-        mSwitcher.setOnCheckedChangeListener(checked -> {
+        mSwitcher.setOnCheckedChangeListener(isChecked -> {
             if (mOnSwitcherChangedListener != null) {
-                mOnSwitcherChangedListener.onCheckChanged(checked);
+                mOnSwitcherChangedListener.onCheckChanged(isChecked);
             }
             return null;
+        });
+        mXSwitchButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (mOnSwitcherChangedListener != null) {
+                mOnSwitcherChangedListener.onCheckChanged(isChecked);
+            }
         });
     }
 
     private void setSwitcherVisible(boolean visible) {
+        this.isSwitcherVisible = visible;
         mSwitcher.setVisibility(visible ? VISIBLE : GONE);
+        mXSwitchButton.setVisibility(visible ? VISIBLE : GONE);
     }
 
     public void setSwitcherSize(int width, int height) {
         mSwitcher.setSize(width, height);
+        ViewGroup.LayoutParams layoutParams = mXSwitchButton.getLayoutParams();
+        if (layoutParams != null) {
+            layoutParams.height = height;
+            layoutParams.width = width;
+            mXSwitchButton.setLayoutParams(layoutParams);
+        }
     }
 
     public void setSwitcherColor(int iconColor, int switchOnColor, int switchOffColor) {
@@ -315,6 +357,7 @@ public class CommonItemView extends XCardRelativeLayout {
         mTextView = findViewById(R.id.common_item_tv);
         mSubTextView = findViewById(R.id.common_item_sub_tv);
         mSwitcher = findViewById(R.id.common_item_switcher);
+        mXSwitchButton = findViewById(R.id.common_item_switch_button);
     }
 
     public interface OnSwitcherChangedListener {
