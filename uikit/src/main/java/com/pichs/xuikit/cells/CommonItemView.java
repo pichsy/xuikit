@@ -92,22 +92,22 @@ public class CommonItemView extends XCardRelativeLayout {
         setSubTextTextSize(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_sub_text_textSize, -1));
         setSubTextTextStyle(ta.getInt(R.styleable.CommonItemView_common_sub_text_textStyle, 0));
         setSubTextMarginEnd(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_sub_text_marginEnd, DEF_MARGIN));
-        switcherType = ta.getInt(R.styleable.CommonItemView_common_switcher_type, 0);
+        switcherType = ta.getInt(R.styleable.CommonItemView_common_switcher_type, SWITCHER_TYPE_DEFAULT);
         setSwitcherType(switcherType);
         // switcher
         setSwitcherSize(
                 ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_width, ViewGroup.LayoutParams.WRAP_CONTENT),
                 ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_height, ViewGroup.LayoutParams.WRAP_CONTENT)
         );
-        setSwitcherElevation(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_elevation, 0));
-        setSwitcherVisible(ta.getBoolean(R.styleable.CommonItemView_common_switcher_visible, false));
-        setSwitcherChecked(ta.getBoolean(R.styleable.CommonItemView_common_switcher_on, false));
         setSwitcherColor(
                 ta.getColor(R.styleable.CommonItemView_common_switcher_iconColor_switch, Color.WHITE),
                 ta.getColor(R.styleable.CommonItemView_common_switcher_bgColor_switchOn, Color.parseColor("#00C853")),
                 ta.getColor(R.styleable.CommonItemView_common_switcher_bgColor_switchOff, Color.parseColor("#d8d8d8"))
         );
+        setSwitcherElevation(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_elevation, 0));
         setSwitcherMarginEnd(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_marginEnd, 0));
+        setSwitcherChecked(ta.getBoolean(R.styleable.CommonItemView_common_switcher_on, false));
+        setSwitcherVisible(ta.getBoolean(R.styleable.CommonItemView_common_switcher_visible, false));
         ta.recycle();
         setClickable(true);
         setGravity(Gravity.CENTER_VERTICAL);
@@ -173,8 +173,16 @@ public class CommonItemView extends XCardRelativeLayout {
 
     private void setSwitcherVisible(boolean visible) {
         this.isSwitcherVisible = visible;
-        mSwitcher.setVisibility(visible ? VISIBLE : GONE);
-        mXSwitchButton.setVisibility(visible ? VISIBLE : GONE);
+        if (!this.isSwitcherVisible) {
+            mSwitcher.setVisibility(GONE);
+            mXSwitchButton.setVisibility(GONE);
+        } else {
+            if (switcherType == SWITCHER_TYPE_DEFAULT) {
+                mXSwitchButton.setVisibility(VISIBLE);
+            } else {
+                mSwitcher.setVisibility(VISIBLE);
+            }
+        }
     }
 
     public void setSwitcherSize(int width, int height) {
@@ -189,6 +197,8 @@ public class CommonItemView extends XCardRelativeLayout {
 
     public void setSwitcherColor(int iconColor, int switchOnColor, int switchOffColor) {
         mSwitcher.setSwitcherColor(iconColor, switchOnColor, switchOffColor);
+        mXSwitchButton.setThumbColor(iconColor, iconColor, iconColor, iconColor);
+        mXSwitchButton.setBackgroundColor(switchOffColor, switchOnColor);
     }
 
     /**

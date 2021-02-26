@@ -148,6 +148,15 @@
         app:xp_section_titleTextSize="20sp"
         app:xp_section_titleTextStyle="bold" />
 
+    <com.pichs.common.widget.switcher.XSwitchButton
+        android:layout_width="80dp"
+        android:layout_height="44dp"
+        app:xp_swb_thumbColor="@color/teal_200"
+        app:xp_swb_backgroundColor_switchOff="#000"
+        app:xp_swb_backgroundColor_switchOn="#f00"
+        android:checked="true"
+        />
+
     <com.pichs.xuikit.cells.CommonItemView
         android:id="@+id/common_item"
         android:layout_width="match_parent"
@@ -157,12 +166,27 @@
         app:common_arrow_visible="false"
         app:common_switcher_visible="true"
         app:common_switcher_marginEnd="16dp"
-        app:common_switcher_bgColor_switchOff="#fff"
+        app:common_switcher_bgColor_switchOff="#A9A5A5"
         app:common_switcher_bgColor_switchOn="#00f"
         app:common_switcher_iconColor_switch="#F20CEF"
         app:common_title_text="用户收藏"
         app:common_title_textColor="#fff"
         app:common_switcher_on="true"
-        app:common_title_textStyle="bold" />
+        app:common_switcher_type="normal"
+        app:common_title_textStyle="bold" >
+
+        <com.pichs.common.widget.switcher.XSwitchButton
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="86dp"
+            app:xp_swb_backgroundColor_switchOn="@color/teal_200"
+            app:xp_swb_backgroundColor_switchOff="#999"
+            app:xp_swb_thumbColor="#fff"
+            app:xp_swb_thumbCheckedColor="#fff"
+            />
+
+    </com.pichs.xuikit.cells.CommonItemView>
 
 </LinearLayout>

@@ -46,7 +46,7 @@
         <attr name="common_switcher_on" format="boolean" />
         <attr name="common_switcher_elevation" format="dimension" />
         <attr name="common_switcher_type" format="enum">
-            <enum name="default" value="0" />
+            <enum name="normal" value="0" />
             <enum name="elastic" value="1" />
         </attr>
     </declare-styleable>

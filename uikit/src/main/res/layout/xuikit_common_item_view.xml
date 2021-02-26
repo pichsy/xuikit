@@ -49,7 +49,7 @@
             app:xp_swb_backgroundColor_switchOn="#00C853"
             app:xp_swb_thumbColor="#ffffff"
             app:xp_swb_thumbMargin="2dp"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_width="44dp"
             android:layout_height="26dp" />
 
