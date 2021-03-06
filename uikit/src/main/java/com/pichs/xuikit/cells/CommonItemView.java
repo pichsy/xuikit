@@ -106,10 +106,13 @@ public class CommonItemView extends XCardRelativeLayout {
         );
         setSwitcherElevation(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_elevation, 0));
         setSwitcherMarginEnd(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_marginEnd, 0));
-        setSwitcherChecked(ta.getBoolean(R.styleable.CommonItemView_common_switcher_on, false));
+        setSwitcherChecked(ta.getBoolean(R.styleable.CommonItemView_common_switcher_on, false),false);
         setSwitcherVisible(ta.getBoolean(R.styleable.CommonItemView_common_switcher_visible, false));
         ta.recycle();
         setClickable(true);
+        setShadowAlpha(0);
+        setShadowColor(Color.TRANSPARENT);
+        setShadowElevation(0);
         setGravity(Gravity.CENTER_VERTICAL);
     }
 

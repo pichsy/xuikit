@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="108dp"
+        android:id="@+id/ll_gift_nor"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="冰粉奶茶"
+            android:textColor="#fff"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="1金币"
+            android:textColor="#999999"
+            android:textSize="8sp" />
+
+    </LinearLayout>
+
+    <com.pichs.common.widget.cardview.XCardLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="108dp"
+        android:background="#26899ABD"
+        android:id="@+id/ll_gift_sel"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:xp_borderColor="#FFFFFF"
+        app:xp_borderWidth="1px"
+        app:xp_radius="8dp">
+
+        <ImageView
+            android:id="@+id/iv_icon_sel"
+            android:layout_width="60dp"
+            android:layout_marginTop="5dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_price_sel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="1金币"
+            android:layout_marginBottom="5dp"
+            android:textColor="#fff"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_send_sel"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="#587EF0"
+            android:gravity="center"
+            android:text="赠送"
+            android:textColor="#fff"
+            android:textSize="12sp" />
+
+    </com.pichs.common.widget.cardview.XCardLinearLayout>
+</FrameLayout>

@@ -171,8 +171,9 @@
         app:common_switcher_iconColor_switch="#F20CEF"
         app:common_title_text="用户收藏"
         app:common_title_textColor="#fff"
+        app:xp_shadowElevation="3dp"
         app:common_switcher_on="true"
-        app:common_switcher_type="normal"
+        app:common_switcher_type="elastic"
         app:common_title_textStyle="bold" >
 
         <com.pichs.common.widget.switcher.XSwitchButton

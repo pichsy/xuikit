@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="LineIndicator">
+        <attr name="zyt_indicator_height" format="dimension|reference" />
+        <attr name="zyt_indicator_color" format="color|reference" />
+        <attr name="zyt_indicator_background_color" format="color|reference" />
+        <attr name="zyt_indicator_current_step" format="integer" />
+        <attr name="zyt_indicator_max_step" format="integer" />
+    </declare-styleable>
+
+</resources>

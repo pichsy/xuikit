@@ -63,6 +63,7 @@ public class NavigationActivity extends AppCompatActivity {
             TabFragment homeFragment = new TabFragment();
             mFragmentList.add(homeFragment);
         }
+        changeFragment(0);
         mBottomBarLayout.setOnItemSelectedListener(new BottomBarLayout.OnItemSelectedListener() {
             @Override
             public void onItemSelected(final BottomBarItem bottomBarItem, int previousPosition, final int currentPosition) {

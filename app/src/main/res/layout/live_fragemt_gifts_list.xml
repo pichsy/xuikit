@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/rcv_gift_pager"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:overScrollMode="never" />
+
+    <com.pichs.app.xwidget.bottom.LineIndicator
+        android:id="@+id/magicIndicator"
+        android:layout_width="130dp"
+        android:layout_height="3dp"
+        android:layout_gravity="center_horizontal"
+        app:zyt_indicator_background_color="#43464B"
+        app:zyt_indicator_color="#D8D8D8"
+        app:zyt_indicator_current_step="1"
+        app:zyt_indicator_height="3dp"
+        app:zyt_indicator_max_step="2" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+</LinearLayout>
