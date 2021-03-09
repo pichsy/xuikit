@@ -14,16 +14,16 @@
         android:layout_weight="1"
         android:overScrollMode="never" />
 
-    <com.pichs.app.xwidget.bottom.LineIndicator
+    <com.pichs.xuikit.indicator.LineIndicator
         android:id="@+id/magicIndicator"
         android:layout_width="130dp"
         android:layout_height="3dp"
         android:layout_gravity="center_horizontal"
-        app:zyt_indicator_background_color="#43464B"
-        app:zyt_indicator_color="#D8D8D8"
-        app:zyt_indicator_current_step="1"
-        app:zyt_indicator_height="3dp"
-        app:zyt_indicator_max_step="2" />
+        app:xp_indicator_background_color="#43464B"
+        app:xp_indicator_color="#D8D8D8"
+        app:xp_indicator_current_step="1"
+        app:xp_indicator_height="3dp"
+        app:xp_indicator_max_step="2" />
 
     <Space
         android:layout_width="match_parent"

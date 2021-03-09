@@ -35,7 +35,7 @@ dependencies {
     implementation 'com.github.pichsy:xdialog:1.3'
     // 1 基础控件，支持更换全局字体
     implementation 'com.github.pichsy:xwidget:1.15'
-    // implementation 'com.github.pichsy:xuikit:1.5'
+    // implementation 'com.github.pichsy:xuikit:1.6'
     // 0.0 基础工具类
     implementation 'com.github.pichsy:xbaseutils:1.0'
     // 0.2 系统分享和文件选择器

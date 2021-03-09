@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  横线的下划线  -->
+    <declare-styleable name="LineIndicator">
+        <attr name="xp_indicator_height" format="dimension|reference" />
+        <attr name="xp_indicator_color" format="color|reference" />
+        <attr name="xp_indicator_background_color" format="color|reference" />
+        <attr name="xp_indicator_current_step" format="integer" />
+        <attr name="xp_indicator_max_step" format="integer" />
+    </declare-styleable>
+
+
+</resources>

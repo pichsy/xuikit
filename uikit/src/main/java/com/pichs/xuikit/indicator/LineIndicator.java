@@ -1,4 +1,4 @@
-package com.pichs.app.xwidget.bottom;
+package com.pichs.xuikit.indicator;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,17 +11,15 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.pichs.app.xwidget.R;
 import com.pichs.common.widget.utils.XDisplayHelper;
+import com.pichs.xuikit.R;
 
 /**
- * @Description: $
- * @Author: WuBo
- * @CreateDate: 2020/10/23$ 11:13$
- * @UpdateUser: WuBo
- * @UpdateDate: 2020/10/23$ 11:13$
- * @UpdateRemark: 更新说明
- * @Version: 1.0
+ * 导航进度条。
+ * 底部礼物翻页进度展示
+ *   ----------
+ * |   ==       |
+ *   ----------
  */
 public class LineIndicator extends View {
 
@@ -61,11 +59,11 @@ public class LineIndicator extends View {
     // 初始化
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.LineIndicator);
-        maxStep = ta.getInt(R.styleable.LineIndicator_zyt_indicator_max_step, 3) - 1;
-        position = ta.getInt(R.styleable.LineIndicator_zyt_indicator_current_step, 1) - 1;
-        selectedColor = ta.getColor(R.styleable.LineIndicator_zyt_indicator_color, Color.BLUE);
-        normalColor = ta.getColor(R.styleable.LineIndicator_zyt_indicator_background_color, Color.LTGRAY);
-        indicatorHeight = ta.getDimensionPixelOffset(R.styleable.LineIndicator_zyt_indicator_height, 0);
+        maxStep = ta.getInt(R.styleable.LineIndicator_xp_indicator_max_step, 3) - 1;
+        position = ta.getInt(R.styleable.LineIndicator_xp_indicator_current_step, 1) - 1;
+        selectedColor = ta.getColor(R.styleable.LineIndicator_xp_indicator_color, Color.BLUE);
+        normalColor = ta.getColor(R.styleable.LineIndicator_xp_indicator_background_color, Color.LTGRAY);
+        indicatorHeight = ta.getDimensionPixelOffset(R.styleable.LineIndicator_xp_indicator_height, 0);
 
         // 理性判断
         if (maxStep <= 0) {

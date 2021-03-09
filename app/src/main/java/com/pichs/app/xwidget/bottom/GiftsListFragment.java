@@ -21,6 +21,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.pichs.app.xwidget.R;
 import com.pichs.common.utils.utils.ToastUtils;
+import com.pichs.xuikit.indicator.LineIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
