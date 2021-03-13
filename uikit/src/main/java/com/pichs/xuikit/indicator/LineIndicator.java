@@ -17,9 +17,9 @@ import com.pichs.xuikit.R;
 /**
  * 导航进度条。
  * 底部礼物翻页进度展示
- *   ----------
+ * ----------
  * |   ==       |
- *   ----------
+ * ----------
  */
 public class LineIndicator extends View {
 
@@ -116,8 +116,8 @@ public class LineIndicator extends View {
         invalidate();
     }
 
-    public void setCurrentPosition(int position){
-        if (this.position==position){
+    public void setCurrentPosition(int position) {
+        if (this.position == position) {
             return;
         }
         this.position = position;
@@ -153,14 +153,9 @@ public class LineIndicator extends View {
     }
 
 
-
     public void onPageSelected(int position) {
         Log.d("onPageScrolled", "onPageSelected= 11> position:" + position);
-        if (this.position != position) {
-            this.position = position;
-            offsetX = stepWidth * position;
-            invalidate();
-        }
+        setCurrentPosition(position);
     }
 
 }
