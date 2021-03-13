@@ -1,51 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!--  通用条目View  -->
     <declare-styleable name="CommonItemView">
-        <!--    基础属性    -->
-        <attr name="common_icon" format="reference|color" />
-        <attr name="common_arrow_visible" format="boolean" />
-        <attr name="common_title_text" format="string|reference" />
-        <attr name="common_sub_text" format="string|reference" />
-        <!--    text size    -->
-        <attr name="common_title_textSize" format="dimension" />
-        <attr name="common_sub_text_textSize" format="dimension" />
-        <!--    text style    -->
-        <attr name="common_title_textStyle" format="enum">
-            <enum name="normal" value="0" />
-            <enum name="bold" value="1" />
-            <enum name="italic" value="2" />
-        </attr>
-        <attr name="common_sub_text_textStyle" format="enum">
-            <enum name="normal" value="0" />
-            <enum name="bold" value="1" />
-            <enum name="italic" value="2" />
-        </attr>
-        <!--    color    -->
-        <attr name="common_icon_colorFilter" format="color|reference" />
-        <attr name="common_arrow_colorFilter" format="color|reference" />
-        <attr name="common_title_textColor" format="color|reference" />
-        <attr name="common_sub_text_textColor" format="color|reference" />
+        <!--    icon    -->
+        <attr name="xp_itemview_icon" format="reference|color" />
+        <attr name="xp_itemview_icon_radius" format="dimension" />
+        <attr name="xp_itemview_icon_width" format="dimension" />
+        <attr name="xp_itemview_icon_height" format="dimension" />
+        <attr name="xp_itemview_icon_colorFilter" format="color|reference" />
+        <attr name="xp_itemview_icon_marginEnd" format="dimension" />
+        <attr name="xp_itemview_icon_marginStart" format="dimension" />
+        <attr name="xp_itemview_icon_padding" format="dimension" />
 
-        <!--   margin配置     -->
-        <attr name="common_icon_marginEnd" format="dimension" />
-        <attr name="common_icon_marginStart" format="dimension" />
-        <attr name="common_title_text_marginStart" format="dimension" />
-        <attr name="common_sub_text_marginEnd" format="dimension" />
-        <attr name="common_arrow_marginEnd" format="dimension" />
+        <!--   title     -->
+        <attr name="xp_itemview_title" format="string|reference" />
+        <attr name="xp_itemview_title_textSize" format="dimension" />
+        <attr name="xp_itemview_title_marginStart" format="dimension" />
+        <attr name="xp_itemview_title_textStyle" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="bold" value="1" />
+            <enum name="italic" value="2" />
+        </attr>
+        <attr name="xp_itemview_title_textColor" format="color|reference" />
+        <attr name="xp_itemview_title_ignoreGlobalTypeface" format="boolean" />
+
+        <!--    subtext    -->
+        <attr name="xp_itemview_subtext" format="string|reference" />
+        <attr name="xp_itemview_subtext_textSize" format="dimension" />
+        <attr name="xp_itemview_subtext_textStyle" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="bold" value="1" />
+            <enum name="italic" value="2" />
+        </attr>
+        <attr name="xp_itemview_subtext_textColor" format="color|reference" />
+        <attr name="xp_itemview_subtext_marginEnd" format="dimension" />
+        <attr name="xp_itemview_subtext_ignoreGlobalTypeface" format="boolean" />
+
+        <!--   arrow     -->
+        <attr name="xp_itemview_arrow_colorFilter" format="color|reference" />
+        <attr name="xp_itemview_arrow_marginEnd" format="dimension" />
+        <attr name="xp_itemview_arrow_padding" format="dimension" />
+        <attr name="xp_itemview_arrow_width" format="dimension" />
+        <attr name="xp_itemview_arrow_height" format="dimension" />
+        <attr name="xp_itemview_arrow_visible" format="boolean" />
+        <attr name="xp_itemview_arrow_radius" format="dimension" />
+        <attr name="xp_itemview_arrow" format="reference|color" />
 
         <!--   switcher     -->
-        <attr name="common_switcher_marginEnd" format="dimension" />
-        <attr name="common_switcher_bgColor_switchOn" format="color" />
-        <attr name="common_switcher_bgColor_switchOff" format="color" />
-        <attr name="common_switcher_iconColor_switch" format="color" />
-        <attr name="common_switcher_height" format="dimension" />
-        <attr name="common_switcher_width" format="dimension" />
-        <attr name="common_switcher_visible" format="boolean" />
-        <attr name="common_switcher_on" format="boolean" />
-        <attr name="common_switcher_elevation" format="dimension" />
-        <attr name="common_switcher_type" format="enum">
+        <attr name="xp_itemview_switcher_marginEnd" format="dimension" />
+        <attr name="xp_itemview_switcher_bgColor_switchOn" format="color" />
+        <attr name="xp_itemview_switcher_bgColor_switchOff" format="color" />
+        <attr name="xp_itemview_switcher_iconColor_switch" format="color" />
+        <attr name="xp_itemview_switcher_height" format="dimension" />
+        <attr name="xp_itemview_switcher_width" format="dimension" />
+        <attr name="xp_itemview_switcher_visible" format="boolean" />
+        <attr name="xp_itemview_switcher_on" format="boolean" />
+        <attr name="xp_itemview_switcher_elevation" format="dimension" />
+        <attr name="xp_itemview_switcher_type" format="enum">
             <enum name="normal" value="0" />
             <enum name="elastic" value="1" />
         </attr>
@@ -104,7 +115,6 @@
         <attr name="xp_section_moreTextColor" format="color" />
         <attr name="xp_section_moreTextSize" format="dimension" />
     </declare-styleable>
-
 
     <!--  索引view  -->
     <declare-styleable name="WaveSideBar">

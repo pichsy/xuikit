@@ -10,25 +10,19 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 
 import com.pichs.common.widget.cardview.XCardImageView;
 import com.pichs.common.widget.cardview.XCardRelativeLayout;
 import com.pichs.common.widget.switcher.XSwitchButton;
+import com.pichs.common.widget.utils.XDisplayHelper;
 import com.pichs.common.widget.view.XImageView;
 import com.pichs.common.widget.view.XTextView;
 import com.pichs.switcher.Switcher;
 import com.pichs.xuikit.R;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 
 /**
  * Created by pichs
@@ -43,7 +37,7 @@ public class CommonItemView extends XCardRelativeLayout {
     private Switcher mSwitcher;
     private XSwitchButton mXSwitchButton;
     private XTextView mSubTextView;
-    private XImageView mArrowImageView;
+    private XCardImageView mArrowImageView;
     // 默认的 开关样式
     public static final int SWITCHER_TYPE_DEFAULT = 0;
     // 有弹性的 开关样式
@@ -70,44 +64,58 @@ public class CommonItemView extends XCardRelativeLayout {
         initView();
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CommonItemView);
         // text
-        setTitle(ta.getString(R.styleable.CommonItemView_common_title_text));
-        setTitleColor(ta.getColor(R.styleable.CommonItemView_common_title_textColor, 0));
-        setTitleTextSize(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_title_textSize, -1));
-        setTitleTextStyle(ta.getInt(R.styleable.CommonItemView_common_title_textStyle, 0));
-        setTitleMarginStart(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_title_text_marginStart, DEF_MARGIN));
+        setTitle(ta.getString(R.styleable.CommonItemView_xp_itemview_title));
+        setTitleIgnoreGlobalTypeface(ta.getBoolean(R.styleable.CommonItemView_xp_itemview_title_ignoreGlobalTypeface, false));
+        setTitleColor(ta.getColor(R.styleable.CommonItemView_xp_itemview_title_textColor, 0));
+        setTitleTextSize(ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_title_textSize, -1));
+        setTitleTextStyle(ta.getInt(R.styleable.CommonItemView_xp_itemview_title_textStyle, 0));
+        setTitleMarginStart(ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_title_marginStart, DEF_MARGIN));
         // icon
-        setIcon(ta.getDrawable(R.styleable.CommonItemView_common_icon));
-        setIconColorFilter(ta.getColor(R.styleable.CommonItemView_common_icon_colorFilter, 0));
-        setIconMarginStart(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_icon_marginStart, DEF_MARGIN));
-        setIconMarginEnd(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_icon_marginEnd, DEF_MARGIN));
+        setIcon(ta.getDrawable(R.styleable.CommonItemView_xp_itemview_icon));
+        setIconColorFilter(ta.getColor(R.styleable.CommonItemView_xp_itemview_icon_colorFilter, 0));
+        setIconSize(
+                ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_icon_width, XDisplayHelper.dp2px(context, 22f)),
+                ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_icon_height, XDisplayHelper.dp2px(context, 22f))
+        );
+        setIconMarginStart(ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_icon_marginStart, DEF_MARGIN));
+        setIconMarginEnd(ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_icon_marginEnd, DEF_MARGIN));
+        setIconPadding(ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_icon_padding, 0));
+        setIconRadius(ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_icon_radius, 0));
+        setArrowRadius(ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_arrow_radius, 0));
 
         // arrow
-        setArrowVisible(ta.getBoolean(R.styleable.CommonItemView_common_arrow_visible, false));
-        setArrowColorFilter(ta.getColor(R.styleable.CommonItemView_common_arrow_colorFilter, 0));
-        setArrowMarginEnd(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_arrow_marginEnd, DEF_MARGIN));
+        setArrowSize(
+                ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_arrow_width, XDisplayHelper.dp2px(context, 22f)),
+                ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_arrow_height, XDisplayHelper.dp2px(context, 22f))
+        );
+        setArrowVisible(ta.getBoolean(R.styleable.CommonItemView_xp_itemview_arrow_visible, false));
+        setArrowColorFilter(ta.getColor(R.styleable.CommonItemView_xp_itemview_arrow_colorFilter, 0));
+        setArrowMarginEnd(ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_arrow_marginEnd, DEF_MARGIN));
+        setArrowPadding(ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_arrow_padding, 0));
 
         // subtext
-        setSubText(ta.getString(R.styleable.CommonItemView_common_sub_text));
-        setSubTextColor(ta.getColor(R.styleable.CommonItemView_common_sub_text_textColor, 0));
-        setSubTextTextSize(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_sub_text_textSize, -1));
-        setSubTextTextStyle(ta.getInt(R.styleable.CommonItemView_common_sub_text_textStyle, 0));
-        setSubTextMarginEnd(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_sub_text_marginEnd, DEF_MARGIN));
-        switcherType = ta.getInt(R.styleable.CommonItemView_common_switcher_type, SWITCHER_TYPE_DEFAULT);
+        setSubText(ta.getString(R.styleable.CommonItemView_xp_itemview_subtext));
+        setSubTextIgnoreGlobalTypeface(ta.getBoolean(R.styleable.CommonItemView_xp_itemview_subtext_ignoreGlobalTypeface, false));
+        setSubTextColor(ta.getColor(R.styleable.CommonItemView_xp_itemview_subtext_textColor, 0));
+        setSubTextTextSize(ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_subtext_textSize, -1));
+        setSubTextTextStyle(ta.getInt(R.styleable.CommonItemView_xp_itemview_subtext_textStyle, 0));
+        setSubTextMarginEnd(ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_subtext_marginEnd, DEF_MARGIN));
+        switcherType = ta.getInt(R.styleable.CommonItemView_xp_itemview_switcher_type, SWITCHER_TYPE_DEFAULT);
         setSwitcherType(switcherType);
         // switcher
         setSwitcherSize(
-                ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_width, ViewGroup.LayoutParams.WRAP_CONTENT),
-                ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_height, ViewGroup.LayoutParams.WRAP_CONTENT)
+                ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_switcher_width, ViewGroup.LayoutParams.WRAP_CONTENT),
+                ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_switcher_height, ViewGroup.LayoutParams.WRAP_CONTENT)
         );
         setSwitcherColor(
-                ta.getColor(R.styleable.CommonItemView_common_switcher_iconColor_switch, Color.WHITE),
-                ta.getColor(R.styleable.CommonItemView_common_switcher_bgColor_switchOn, Color.parseColor("#00C853")),
-                ta.getColor(R.styleable.CommonItemView_common_switcher_bgColor_switchOff, Color.parseColor("#d8d8d8"))
+                ta.getColor(R.styleable.CommonItemView_xp_itemview_switcher_iconColor_switch, Color.WHITE),
+                ta.getColor(R.styleable.CommonItemView_xp_itemview_switcher_bgColor_switchOn, Color.parseColor("#00C853")),
+                ta.getColor(R.styleable.CommonItemView_xp_itemview_switcher_bgColor_switchOff, Color.parseColor("#d8d8d8"))
         );
-        setSwitcherElevation(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_elevation, 0));
-        setSwitcherMarginEnd(ta.getDimensionPixelSize(R.styleable.CommonItemView_common_switcher_marginEnd, 0));
-        setSwitcherChecked(ta.getBoolean(R.styleable.CommonItemView_common_switcher_on, false),false);
-        setSwitcherVisible(ta.getBoolean(R.styleable.CommonItemView_common_switcher_visible, false));
+        setSwitcherElevation(ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_switcher_elevation, 0));
+        setSwitcherMarginEnd(ta.getDimensionPixelSize(R.styleable.CommonItemView_xp_itemview_switcher_marginEnd, 0));
+        setSwitcherChecked(ta.getBoolean(R.styleable.CommonItemView_xp_itemview_switcher_on, false), false);
+        setSwitcherVisible(ta.getBoolean(R.styleable.CommonItemView_xp_itemview_switcher_visible, false));
         ta.recycle();
         setClickable(true);
         setShadowAlpha(0);
@@ -116,7 +124,77 @@ public class CommonItemView extends XCardRelativeLayout {
         setGravity(Gravity.CENTER_VERTICAL);
     }
 
-    private void setSwitcherType(int switcherType) {
+    public void setArrowRadius(int radius) {
+        mArrowImageView.setRadius(radius);
+    }
+
+
+    public XCardImageView getIconView() {
+        return mImageView;
+    }
+
+
+    public XCardImageView getArrowView() {
+        return mArrowImageView;
+    }
+
+    public void setIconRadius(int radius) {
+        mImageView.setRadius(radius);
+    }
+
+    public void setArrowPadding(int padding) {
+        mArrowImageView.setPadding(padding, padding, padding, padding);
+    }
+
+    public void setIconPadding(int padding) {
+        mImageView.setPadding(padding, padding, padding, padding);
+    }
+
+    /**
+     * 设置图片的尺寸
+     *
+     * @param width
+     * @param height
+     */
+    public void setArrowSize(int width, int height) {
+        ViewGroup.LayoutParams layoutParams = mArrowImageView.getLayoutParams();
+        if (layoutParams != null) {
+            layoutParams.width = width;
+            layoutParams.height = height;
+            mArrowImageView.setLayoutParams(layoutParams);
+        }
+    }
+
+    /**
+     * 设置图片的尺寸
+     *
+     * @param width
+     * @param height
+     */
+    public void setIconSize(int width, int height) {
+        ViewGroup.LayoutParams layoutParams = mImageView.getLayoutParams();
+        if (layoutParams != null) {
+            layoutParams.width = width;
+            layoutParams.height = height;
+            mImageView.setLayoutParams(layoutParams);
+        }
+    }
+
+    /**
+     * 屏蔽title全局字体变化
+     */
+    public void setTitleIgnoreGlobalTypeface(boolean ignoreGlobalTypeface) {
+        mTextView.setIgnoreGlobalTypeface(ignoreGlobalTypeface);
+    }
+
+    /**
+     * 屏蔽subtext全局字体变化
+     */
+    public void setSubTextIgnoreGlobalTypeface(boolean ignoreGlobalTypeface) {
+        mSubTextView.setIgnoreGlobalTypeface(ignoreGlobalTypeface);
+    }
+
+    public void setSwitcherType(int switcherType) {
         if (!isSwitcherVisible) {
             return;
         }
@@ -129,12 +207,12 @@ public class CommonItemView extends XCardRelativeLayout {
         }
     }
 
-    private void setSwitcherElevation(int elevation) {
+    public void setSwitcherElevation(int elevation) {
         mSwitcher.setElevation(elevation);
         invalidate();
     }
 
-    private void setSwitcherChecked(boolean isChecked) {
+    public void setSwitcherChecked(boolean isChecked) {
         mSwitcher.setChecked(isChecked, true);
         mXSwitchButton.setChecked(isChecked);
     }
@@ -144,7 +222,7 @@ public class CommonItemView extends XCardRelativeLayout {
         mXSwitchButton.setChecked(isChecked);
     }
 
-    private void setSwitcherMarginEnd(int marginEnd) {
+    public void setSwitcherMarginEnd(int marginEnd) {
         ViewGroup.MarginLayoutParams layoutParams = (MarginLayoutParams) mSwitcher.getLayoutParams();
         if (layoutParams != null) {
             layoutParams.setMarginEnd(marginEnd);
@@ -174,7 +252,7 @@ public class CommonItemView extends XCardRelativeLayout {
         });
     }
 
-    private void setSwitcherVisible(boolean visible) {
+    public void setSwitcherVisible(boolean visible) {
         this.isSwitcherVisible = visible;
         if (!this.isSwitcherVisible) {
             mSwitcher.setVisibility(GONE);
@@ -209,7 +287,7 @@ public class CommonItemView extends XCardRelativeLayout {
      *
      * @param arrowMarginEnd 箭头的marginEnd
      */
-    private void setArrowMarginEnd(int arrowMarginEnd) {
+    public void setArrowMarginEnd(int arrowMarginEnd) {
         if (arrowMarginEnd != DEF_MARGIN) {
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mArrowImageView.getLayoutParams();
             layoutParams.rightMargin = arrowMarginEnd;
@@ -222,7 +300,7 @@ public class CommonItemView extends XCardRelativeLayout {
      *
      * @param subTextMarginEnd 显示内容的marginEnd
      */
-    private void setSubTextMarginEnd(int subTextMarginEnd) {
+    public void setSubTextMarginEnd(int subTextMarginEnd) {
         if (subTextMarginEnd != DEF_MARGIN) {
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mSubTextView.getLayoutParams();
             layoutParams.rightMargin = subTextMarginEnd;
@@ -235,7 +313,7 @@ public class CommonItemView extends XCardRelativeLayout {
      *
      * @param titleMarginStart title的marginStart
      */
-    private void setTitleMarginStart(int titleMarginStart) {
+    public void setTitleMarginStart(int titleMarginStart) {
         if (titleMarginStart != DEF_MARGIN) {
             LayoutParams layoutParams = (LayoutParams) mTextView.getLayoutParams();
             layoutParams.leftMargin = titleMarginStart;
@@ -248,7 +326,7 @@ public class CommonItemView extends XCardRelativeLayout {
      *
      * @param iconMarginEnd 图片的marginEnd
      */
-    private void setIconMarginEnd(int iconMarginEnd) {
+    public void setIconMarginEnd(int iconMarginEnd) {
         if (iconMarginEnd != DEF_MARGIN) {
             LayoutParams layoutParams = (LayoutParams) mImageView.getLayoutParams();
             layoutParams.rightMargin = iconMarginEnd;
@@ -261,7 +339,7 @@ public class CommonItemView extends XCardRelativeLayout {
      *
      * @param iconMarginStart 图片的marginStart
      */
-    private void setIconMarginStart(int iconMarginStart) {
+    public void setIconMarginStart(int iconMarginStart) {
         if (iconMarginStart != DEF_MARGIN) {
             LayoutParams layoutParams = (LayoutParams) mImageView.getLayoutParams();
             layoutParams.leftMargin = iconMarginStart;
