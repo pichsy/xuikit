@@ -150,7 +150,7 @@ public class XToolBarLayout extends XCardRelativeLayout {
         setTitle(ta.getText(R.styleable.XToolBarLayout_xp_toolbar_title));
         setTitleTextSize(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_title_textSize, 0));
         setTitleTextColor(ta.getColor(R.styleable.XToolBarLayout_xp_toolbar_title_textColor, 0));
-        setTitleTextStyle(ta.getInt(R.styleable.XToolBarLayout_xp_toolbar_title_TextStyle, 0));
+        setTitleTextStyle(ta.getInt(R.styleable.XToolBarLayout_xp_toolbar_title_textStyle, 0));
         // 0 center， 1 left
         setTitleGravity(ta.getInt(R.styleable.XToolBarLayout_xp_toolbar_title_layoutGravity, 0));
         setTitleMarginStart(ta.getDimensionPixelSize(R.styleable.XToolBarLayout_xp_toolbar_title_marginStart, 0));

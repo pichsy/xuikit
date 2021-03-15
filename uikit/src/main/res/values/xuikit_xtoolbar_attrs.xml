@@ -15,7 +15,7 @@
             <enum name="left" value="1" />
             <enum name="right" value="2" />
         </attr>
-        <attr name="xp_toolbar_title_TextStyle" format="enum">
+        <attr name="xp_toolbar_title_textStyle" format="enum">
             <enum name="normal" value="0" />
             <enum name="bold" value="1" />
             <enum name="italic" value="2" />
