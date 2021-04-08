@@ -1,3 +1,7 @@
+
+# 最新地址, 该项目已移到gitee
+# [https://gitee.com/pichs/xuikit](https://gitee.com/pichs/xuikit)
+
 # xuikit
 最喜欢的自定义控件
 可结合xskinloader 扩展换肤
